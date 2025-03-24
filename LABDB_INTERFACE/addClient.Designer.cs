@@ -43,96 +43,103 @@
             // 
             // maskedTextBox_phone
             // 
-            maskedTextBox_phone.Location = new Point(14, 129);
-            maskedTextBox_phone.Margin = new Padding(3, 4, 3, 4);
+            maskedTextBox_phone.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            maskedTextBox_phone.Location = new Point(12, 97);
             maskedTextBox_phone.Mask = "7 (000) 000-00-00";
             maskedTextBox_phone.Name = "maskedTextBox_phone";
-            maskedTextBox_phone.Size = new Size(114, 27);
+            maskedTextBox_phone.Size = new Size(145, 23);
             maskedTextBox_phone.TabIndex = 0;
             // 
             // textBox_firstname
             // 
-            textBox_firstname.Location = new Point(14, 16);
-            textBox_firstname.Margin = new Padding(3, 4, 3, 4);
+            textBox_firstname.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            textBox_firstname.Location = new Point(12, 12);
             textBox_firstname.Name = "textBox_firstname";
-            textBox_firstname.Size = new Size(114, 27);
+            textBox_firstname.Size = new Size(145, 23);
             textBox_firstname.TabIndex = 1;
             // 
             // textBox_lastname
             // 
-            textBox_lastname.Location = new Point(14, 72);
-            textBox_lastname.Margin = new Padding(3, 4, 3, 4);
+            textBox_lastname.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            textBox_lastname.Location = new Point(12, 54);
             textBox_lastname.Name = "textBox_lastname";
-            textBox_lastname.Size = new Size(114, 27);
+            textBox_lastname.Size = new Size(145, 23);
             textBox_lastname.TabIndex = 2;
             // 
             // maskedTextBox_email
             // 
-            maskedTextBox_email.Location = new Point(14, 188);
-            maskedTextBox_email.Margin = new Padding(3, 4, 3, 4);
+            maskedTextBox_email.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            maskedTextBox_email.Location = new Point(12, 141);
             maskedTextBox_email.Name = "maskedTextBox_email";
-            maskedTextBox_email.Size = new Size(114, 27);
+            maskedTextBox_email.Size = new Size(145, 23);
             maskedTextBox_email.TabIndex = 3;
             // 
             // textBox_address
             // 
-            textBox_address.Location = new Point(14, 243);
-            textBox_address.Margin = new Padding(3, 4, 3, 4);
+            textBox_address.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            textBox_address.Location = new Point(12, 182);
             textBox_address.Name = "textBox_address";
-            textBox_address.Size = new Size(114, 27);
+            textBox_address.Size = new Size(145, 23);
             textBox_address.TabIndex = 4;
             // 
             // label_firstname
             // 
+            label_firstname.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             label_firstname.AutoSize = true;
-            label_firstname.Location = new Point(135, 20);
+            label_firstname.Location = new Point(161, 15);
             label_firstname.Name = "label_firstname";
-            label_firstname.Size = new Size(39, 20);
+            label_firstname.Size = new Size(31, 15);
             label_firstname.TabIndex = 5;
             label_firstname.Text = "Имя";
             // 
             // label_lastname
             // 
+            label_lastname.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             label_lastname.AutoSize = true;
-            label_lastname.Location = new Point(135, 76);
+            label_lastname.Location = new Point(161, 57);
             label_lastname.Name = "label_lastname";
-            label_lastname.Size = new Size(73, 20);
+            label_lastname.Size = new Size(58, 15);
             label_lastname.TabIndex = 6;
             label_lastname.Text = "Фамилия";
+            label_lastname.Click += label_lastname_Click;
             // 
             // label_phone
             // 
+            label_phone.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             label_phone.AutoSize = true;
-            label_phone.Location = new Point(135, 129);
+            label_phone.Location = new Point(161, 100);
             label_phone.Name = "label_phone";
-            label_phone.Size = new Size(127, 20);
+            label_phone.Size = new Size(101, 15);
             label_phone.TabIndex = 7;
             label_phone.Text = "Номер телефона";
             // 
             // label_mail
             // 
+            label_mail.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             label_mail.AutoSize = true;
-            label_mail.Location = new Point(135, 192);
+            label_mail.Location = new Point(161, 144);
             label_mail.Name = "label_mail";
-            label_mail.Size = new Size(51, 20);
+            label_mail.Size = new Size(41, 15);
             label_mail.TabIndex = 8;
             label_mail.Text = "Почта";
             // 
             // label_address
             // 
+            label_address.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             label_address.AutoSize = true;
-            label_address.Location = new Point(135, 247);
+            label_address.Location = new Point(159, 185);
             label_address.Name = "label_address";
-            label_address.Size = new Size(51, 20);
+            label_address.Size = new Size(40, 15);
             label_address.TabIndex = 9;
             label_address.Text = "Адрес";
             // 
             // addButton_client
             // 
-            addButton_client.Location = new Point(14, 336);
-            addButton_client.Margin = new Padding(3, 4, 3, 4);
+            addButton_client.Cursor = Cursors.Hand;
+            addButton_client.Dock = DockStyle.Bottom;
+            addButton_client.Location = new Point(0, 234);
             addButton_client.Name = "addButton_client";
-            addButton_client.Size = new Size(266, 84);
+            addButton_client.Size = new Size(302, 63);
             addButton_client.TabIndex = 10;
             addButton_client.Text = "Добавить данные";
             addButton_client.UseVisualStyleBackColor = true;
@@ -140,9 +147,9 @@
             // 
             // addClient
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(294, 436);
+            ClientSize = new Size(302, 297);
             Controls.Add(addButton_client);
             Controls.Add(label_address);
             Controls.Add(label_mail);
@@ -154,9 +161,9 @@
             Controls.Add(textBox_lastname);
             Controls.Add(textBox_firstname);
             Controls.Add(maskedTextBox_phone);
-            Margin = new Padding(3, 4, 3, 4);
             Name = "addClient";
             Text = "Добавить клиента";
+            Load += addClient_Load;
             ResumeLayout(false);
             PerformLayout();
         }

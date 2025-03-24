@@ -115,5 +115,10 @@ namespace LABDB_INTERFACE
             AddOrderForm.ShowDialog();
             LoadOrders();
         }
+
+        private void edit_order_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

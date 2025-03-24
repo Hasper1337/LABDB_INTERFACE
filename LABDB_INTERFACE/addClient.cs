@@ -92,5 +92,15 @@ namespace LABDB_INTERFACE
             // Закрываем форму после сохранения
             this.Close();
         }
+
+        private void label_lastname_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void addClient_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -108,5 +108,12 @@ namespace LABDB_INTERFACE
             AddClientForm.ShowDialog();
             LoadClients();
         }
+
+        private void add_order_Click(object sender, EventArgs e)
+        {
+            addOrder AddOrderForm = new();
+            AddOrderForm.ShowDialog();
+            LoadOrders();
+        }
     }
 }

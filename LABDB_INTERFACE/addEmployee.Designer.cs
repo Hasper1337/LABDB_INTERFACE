@@ -35,7 +35,7 @@
             textBox_lastname = new TextBox();
             textBox_firstname = new TextBox();
             maskedTextBox_phone = new MaskedTextBox();
-            addButton_client = new Button();
+            addButton_employee = new Button();
             textBox_role = new TextBox();
             label_role = new Label();
             maskedTextBox_passportdata = new MaskedTextBox();
@@ -107,16 +107,17 @@
             maskedTextBox_phone.Size = new Size(162, 23);
             maskedTextBox_phone.TabIndex = 20;
             // 
-            // addButton_client
+            // addButton_employee
             // 
-            addButton_client.Cursor = Cursors.Hand;
-            addButton_client.Dock = DockStyle.Bottom;
-            addButton_client.Location = new Point(0, 234);
-            addButton_client.Name = "addButton_client";
-            addButton_client.Size = new Size(302, 63);
-            addButton_client.TabIndex = 30;
-            addButton_client.Text = "Добавить данные";
-            addButton_client.UseVisualStyleBackColor = true;
+            addButton_employee.Cursor = Cursors.Hand;
+            addButton_employee.Dock = DockStyle.Bottom;
+            addButton_employee.Location = new Point(0, 234);
+            addButton_employee.Name = "addButton_employee";
+            addButton_employee.Size = new Size(302, 63);
+            addButton_employee.TabIndex = 30;
+            addButton_employee.Text = "Добавить данные";
+            addButton_employee.UseVisualStyleBackColor = true;
+            addButton_employee.Click += addButton_employee_Click_1;
             // 
             // textBox_role
             // 
@@ -140,7 +141,7 @@
             // 
             maskedTextBox_passportdata.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             maskedTextBox_passportdata.Location = new Point(12, 172);
-            maskedTextBox_passportdata.Mask = "____ ______";
+            maskedTextBox_passportdata.Mask = "0000 000000";
             maskedTextBox_passportdata.Name = "maskedTextBox_passportdata";
             maskedTextBox_passportdata.Size = new Size(162, 23);
             maskedTextBox_passportdata.TabIndex = 33;
@@ -153,7 +154,7 @@
             Controls.Add(maskedTextBox_passportdata);
             Controls.Add(label_role);
             Controls.Add(textBox_role);
-            Controls.Add(addButton_client);
+            Controls.Add(addButton_employee);
             Controls.Add(label_passportdata);
             Controls.Add(label_phone);
             Controls.Add(label_lastname);
@@ -176,7 +177,7 @@
         private TextBox textBox_lastname;
         private TextBox textBox_firstname;
         private MaskedTextBox maskedTextBox_phone;
-        private Button addButton_client;
+        private Button addButton_employee;
         private TextBox textBox_role;
         private Label label_role;
         private MaskedTextBox maskedTextBox_passportdata;

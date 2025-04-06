@@ -28,35 +28,36 @@
         /// </summary>
         private void InitializeComponent()
         {
-            addButton_client = new Button();
+            addButton_order = new Button();
             label_pickupDate = new Label();
             label_idClient_forOrder = new Label();
             numericUpDown_idClient = new NumericUpDown();
             maskedTextBox1 = new MaskedTextBox();
             groupBox1 = new GroupBox();
-            textBox_typeCloath = new TextBox();
-            textBox_Product_color = new TextBox();
-            textBox_Product_features = new TextBox();
-            textBox_Product_typeProduct = new TextBox();
-            label_Product_typeCloath = new Label();
-            label_Product_color = new Label();
-            label_Product_features = new Label();
-            label_Product_typeProduct = new Label();
             checkBox_Product_lining = new CheckBox();
+            label_Product_typeProduct = new Label();
+            label_Product_features = new Label();
+            label_Product_color = new Label();
+            label_Product_typeCloath = new Label();
+            textBox_Product_typeProduct = new TextBox();
+            textBox_Product_features = new TextBox();
+            textBox_Product_color = new TextBox();
+            textBox_typeCloath = new TextBox();
             ((System.ComponentModel.ISupportInitialize)numericUpDown_idClient).BeginInit();
             groupBox1.SuspendLayout();
             SuspendLayout();
             // 
-            // addButton_client
+            // addButton_order
             // 
-            addButton_client.Cursor = Cursors.Hand;
-            addButton_client.Dock = DockStyle.Bottom;
-            addButton_client.Location = new Point(0, 338);
-            addButton_client.Name = "addButton_client";
-            addButton_client.Size = new Size(302, 63);
-            addButton_client.TabIndex = 41;
-            addButton_client.Text = "Добавить данные";
-            addButton_client.UseVisualStyleBackColor = true;
+            addButton_order.Cursor = Cursors.Hand;
+            addButton_order.Dock = DockStyle.Bottom;
+            addButton_order.Location = new Point(0, 338);
+            addButton_order.Name = "addButton_order";
+            addButton_order.Size = new Size(302, 63);
+            addButton_order.TabIndex = 41;
+            addButton_order.Text = "Добавить данные";
+            addButton_order.UseVisualStyleBackColor = true;
+            addButton_order.Click += addButton_order_Click;
             // 
             // label_pickupDate
             // 
@@ -112,70 +113,6 @@
             groupBox1.TabStop = false;
             groupBox1.Text = "Данные изделия";
             // 
-            // textBox_typeCloath
-            // 
-            textBox_typeCloath.Location = new Point(6, 32);
-            textBox_typeCloath.Name = "textBox_typeCloath";
-            textBox_typeCloath.Size = new Size(134, 23);
-            textBox_typeCloath.TabIndex = 0;
-            // 
-            // textBox_Product_color
-            // 
-            textBox_Product_color.Location = new Point(6, 73);
-            textBox_Product_color.Name = "textBox_Product_color";
-            textBox_Product_color.Size = new Size(134, 23);
-            textBox_Product_color.TabIndex = 1;
-            // 
-            // textBox_Product_features
-            // 
-            textBox_Product_features.Location = new Point(6, 113);
-            textBox_Product_features.Name = "textBox_Product_features";
-            textBox_Product_features.Size = new Size(134, 23);
-            textBox_Product_features.TabIndex = 2;
-            // 
-            // textBox_Product_typeProduct
-            // 
-            textBox_Product_typeProduct.Location = new Point(6, 191);
-            textBox_Product_typeProduct.Name = "textBox_Product_typeProduct";
-            textBox_Product_typeProduct.Size = new Size(134, 23);
-            textBox_Product_typeProduct.TabIndex = 4;
-            // 
-            // label_Product_typeCloath
-            // 
-            label_Product_typeCloath.AutoSize = true;
-            label_Product_typeCloath.Location = new Point(150, 35);
-            label_Product_typeCloath.Name = "label_Product_typeCloath";
-            label_Product_typeCloath.Size = new Size(61, 15);
-            label_Product_typeCloath.TabIndex = 5;
-            label_Product_typeCloath.Text = "Тип ткани";
-            // 
-            // label_Product_color
-            // 
-            label_Product_color.AutoSize = true;
-            label_Product_color.Location = new Point(150, 76);
-            label_Product_color.Name = "label_Product_color";
-            label_Product_color.Size = new Size(33, 15);
-            label_Product_color.TabIndex = 6;
-            label_Product_color.Text = "Цвет";
-            // 
-            // label_Product_features
-            // 
-            label_Product_features.AutoSize = true;
-            label_Product_features.Location = new Point(150, 116);
-            label_Product_features.Name = "label_Product_features";
-            label_Product_features.Size = new Size(81, 15);
-            label_Product_features.TabIndex = 7;
-            label_Product_features.Text = "Особенности";
-            // 
-            // label_Product_typeProduct
-            // 
-            label_Product_typeProduct.AutoSize = true;
-            label_Product_typeProduct.Location = new Point(150, 194);
-            label_Product_typeProduct.Name = "label_Product_typeProduct";
-            label_Product_typeProduct.Size = new Size(74, 15);
-            label_Product_typeProduct.TabIndex = 9;
-            label_Product_typeProduct.Text = "Тип изделия";
-            // 
             // checkBox_Product_lining
             // 
             checkBox_Product_lining.AutoSize = true;
@@ -186,6 +123,70 @@
             checkBox_Product_lining.Text = "Наличие подкладки";
             checkBox_Product_lining.UseVisualStyleBackColor = true;
             // 
+            // label_Product_typeProduct
+            // 
+            label_Product_typeProduct.AutoSize = true;
+            label_Product_typeProduct.Location = new Point(150, 194);
+            label_Product_typeProduct.Name = "label_Product_typeProduct";
+            label_Product_typeProduct.Size = new Size(74, 15);
+            label_Product_typeProduct.TabIndex = 9;
+            label_Product_typeProduct.Text = "Тип изделия";
+            // 
+            // label_Product_features
+            // 
+            label_Product_features.AutoSize = true;
+            label_Product_features.Location = new Point(150, 116);
+            label_Product_features.Name = "label_Product_features";
+            label_Product_features.Size = new Size(81, 15);
+            label_Product_features.TabIndex = 7;
+            label_Product_features.Text = "Особенности";
+            // 
+            // label_Product_color
+            // 
+            label_Product_color.AutoSize = true;
+            label_Product_color.Location = new Point(150, 76);
+            label_Product_color.Name = "label_Product_color";
+            label_Product_color.Size = new Size(33, 15);
+            label_Product_color.TabIndex = 6;
+            label_Product_color.Text = "Цвет";
+            // 
+            // label_Product_typeCloath
+            // 
+            label_Product_typeCloath.AutoSize = true;
+            label_Product_typeCloath.Location = new Point(150, 35);
+            label_Product_typeCloath.Name = "label_Product_typeCloath";
+            label_Product_typeCloath.Size = new Size(61, 15);
+            label_Product_typeCloath.TabIndex = 5;
+            label_Product_typeCloath.Text = "Тип ткани";
+            // 
+            // textBox_Product_typeProduct
+            // 
+            textBox_Product_typeProduct.Location = new Point(6, 191);
+            textBox_Product_typeProduct.Name = "textBox_Product_typeProduct";
+            textBox_Product_typeProduct.Size = new Size(134, 23);
+            textBox_Product_typeProduct.TabIndex = 4;
+            // 
+            // textBox_Product_features
+            // 
+            textBox_Product_features.Location = new Point(6, 113);
+            textBox_Product_features.Name = "textBox_Product_features";
+            textBox_Product_features.Size = new Size(134, 23);
+            textBox_Product_features.TabIndex = 2;
+            // 
+            // textBox_Product_color
+            // 
+            textBox_Product_color.Location = new Point(6, 73);
+            textBox_Product_color.Name = "textBox_Product_color";
+            textBox_Product_color.Size = new Size(134, 23);
+            textBox_Product_color.TabIndex = 1;
+            // 
+            // textBox_typeCloath
+            // 
+            textBox_typeCloath.Location = new Point(6, 32);
+            textBox_typeCloath.Name = "textBox_typeCloath";
+            textBox_typeCloath.Size = new Size(134, 23);
+            textBox_typeCloath.TabIndex = 0;
+            // 
             // addOrder
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -194,7 +195,7 @@
             Controls.Add(groupBox1);
             Controls.Add(maskedTextBox1);
             Controls.Add(numericUpDown_idClient);
-            Controls.Add(addButton_client);
+            Controls.Add(addButton_order);
             Controls.Add(label_pickupDate);
             Controls.Add(label_idClient_forOrder);
             Name = "addOrder";
@@ -207,7 +208,7 @@
         }
 
         #endregion
-        private Button addButton_client;
+        private Button addButton_order;
         private Label label_pickupDate;
         private Label label_idClient_forOrder;
         private NumericUpDown numericUpDown_idClient;

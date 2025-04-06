@@ -120,5 +120,19 @@ namespace LABDB_INTERFACE
         {
 
         }
+
+        private void add_employee_Click(object sender, EventArgs e)
+        {
+            addEmployee AddEmployeeForm = new();
+            AddEmployeeForm.ShowDialog();
+            LoadEmployee();
+        }
+
+        private void add_service_Click(object sender, EventArgs e)
+        {
+            addService AddServiceForm = new();
+            AddServiceForm.ShowDialog();
+            LoadService();
+        }
     }
 }

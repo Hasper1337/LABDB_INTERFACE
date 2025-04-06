@@ -34,12 +34,14 @@
             edit_client = new Button();
             add_client = new Button();
             Orders = new TabPage();
+            groupBox1 = new GroupBox();
+            updateDateIssueButton = new Button();
+            updateStatusButton = new Button();
             edit_order = new Button();
             add_order = new Button();
             dataGrid_order = new DataGridView();
             Product = new TabPage();
             edit_product = new Button();
-            add_product = new Button();
             dataGrid_product = new DataGridView();
             Service = new TabPage();
             edit_service = new Button();
@@ -49,13 +51,12 @@
             edit_employee = new Button();
             add_employee = new Button();
             dataGrid_employee = new DataGridView();
-            groupBox1 = new GroupBox();
-            updateStatusButton = new Button();
-            updateDateIssueButton = new Button();
+            Report = new TabPage();
             ((System.ComponentModel.ISupportInitialize)datagrid_client).BeginInit();
             tabControl1.SuspendLayout();
             Clients.SuspendLayout();
             Orders.SuspendLayout();
+            groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGrid_order).BeginInit();
             Product.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGrid_product).BeginInit();
@@ -63,7 +64,6 @@
             ((System.ComponentModel.ISupportInitialize)dataGrid_service).BeginInit();
             Employee.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGrid_employee).BeginInit();
-            groupBox1.SuspendLayout();
             SuspendLayout();
             // 
             // datagrid_client
@@ -86,13 +86,13 @@
             tabControl1.Controls.Add(Product);
             tabControl1.Controls.Add(Service);
             tabControl1.Controls.Add(Employee);
+            tabControl1.Controls.Add(Report);
             tabControl1.Location = new Point(0, 0);
             tabControl1.Margin = new Padding(3, 2, 3, 2);
             tabControl1.Name = "tabControl1";
             tabControl1.SelectedIndex = 0;
             tabControl1.Size = new Size(1098, 360);
             tabControl1.TabIndex = 1;
-            tabControl1.SelectedIndexChanged += this.tabControl1_SelectedIndexChanged;
             // 
             // Clients
             // 
@@ -148,6 +148,42 @@
             Orders.Text = "Заказы";
             Orders.UseVisualStyleBackColor = true;
             // 
+            // groupBox1
+            // 
+            groupBox1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            groupBox1.Controls.Add(updateDateIssueButton);
+            groupBox1.Controls.Add(updateStatusButton);
+            groupBox1.Location = new Point(788, 186);
+            groupBox1.Name = "groupBox1";
+            groupBox1.Size = new Size(279, 123);
+            groupBox1.TabIndex = 6;
+            groupBox1.TabStop = false;
+            groupBox1.Text = "Обновление данных";
+            // 
+            // updateDateIssueButton
+            // 
+            updateDateIssueButton.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            updateDateIssueButton.Cursor = Cursors.Hand;
+            updateDateIssueButton.Location = new Point(49, 64);
+            updateDateIssueButton.Margin = new Padding(3, 2, 3, 2);
+            updateDateIssueButton.Name = "updateDateIssueButton";
+            updateDateIssueButton.Size = new Size(174, 45);
+            updateDateIssueButton.TabIndex = 8;
+            updateDateIssueButton.Text = "Указать дату выдачи\r\n(статус - выданно)";
+            updateDateIssueButton.UseVisualStyleBackColor = true;
+            // 
+            // updateStatusButton
+            // 
+            updateStatusButton.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            updateStatusButton.Cursor = Cursors.Hand;
+            updateStatusButton.Location = new Point(49, 21);
+            updateStatusButton.Margin = new Padding(3, 2, 3, 2);
+            updateStatusButton.Name = "updateStatusButton";
+            updateStatusButton.Size = new Size(174, 29);
+            updateStatusButton.TabIndex = 7;
+            updateStatusButton.Text = "Обновить статус заказа";
+            updateStatusButton.UseVisualStyleBackColor = true;
+            // 
             // edit_order
             // 
             edit_order.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
@@ -188,7 +224,6 @@
             // Product
             // 
             Product.Controls.Add(edit_product);
-            Product.Controls.Add(add_product);
             Product.Controls.Add(dataGrid_product);
             Product.Location = new Point(4, 24);
             Product.Margin = new Padding(3, 2, 3, 2);
@@ -202,25 +237,13 @@
             // 
             edit_product.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             edit_product.Cursor = Cursors.Hand;
-            edit_product.Location = new Point(788, 82);
+            edit_product.Location = new Point(788, 13);
             edit_product.Margin = new Padding(3, 2, 3, 2);
             edit_product.Name = "edit_product";
             edit_product.Size = new Size(279, 46);
             edit_product.TabIndex = 5;
             edit_product.Text = "Редактирование данных";
             edit_product.UseVisualStyleBackColor = true;
-            // 
-            // add_product
-            // 
-            add_product.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            add_product.Cursor = Cursors.Hand;
-            add_product.Location = new Point(788, 13);
-            add_product.Margin = new Padding(3, 2, 3, 2);
-            add_product.Name = "add_product";
-            add_product.Size = new Size(279, 46);
-            add_product.TabIndex = 4;
-            add_product.Text = "Добавить вещь";
-            add_product.UseVisualStyleBackColor = true;
             // 
             // dataGrid_product
             // 
@@ -269,6 +292,7 @@
             add_service.TabIndex = 4;
             add_service.Text = "Добавить услугу";
             add_service.UseVisualStyleBackColor = true;
+            add_service.Click += add_service_Click;
             // 
             // dataGrid_service
             // 
@@ -317,6 +341,7 @@
             add_employee.TabIndex = 4;
             add_employee.Text = "Добавить сотрудника";
             add_employee.UseVisualStyleBackColor = true;
+            add_employee.Click += add_employee_Click;
             // 
             // dataGrid_employee
             // 
@@ -329,41 +354,14 @@
             dataGrid_employee.Size = new Size(759, 332);
             dataGrid_employee.TabIndex = 3;
             // 
-            // groupBox1
+            // Report
             // 
-            groupBox1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            groupBox1.Controls.Add(updateDateIssueButton);
-            groupBox1.Controls.Add(updateStatusButton);
-            groupBox1.Location = new Point(788, 186);
-            groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(279, 123);
-            groupBox1.TabIndex = 6;
-            groupBox1.TabStop = false;
-            groupBox1.Text = "Обновление данных";
-            // 
-            // updateStatusButton
-            // 
-            updateStatusButton.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            updateStatusButton.Cursor = Cursors.Hand;
-            updateStatusButton.Location = new Point(49, 21);
-            updateStatusButton.Margin = new Padding(3, 2, 3, 2);
-            updateStatusButton.Name = "updateStatusButton";
-            updateStatusButton.Size = new Size(174, 29);
-            updateStatusButton.TabIndex = 7;
-            updateStatusButton.Text = "Обновить статус заказа";
-            updateStatusButton.UseVisualStyleBackColor = true;
-            // 
-            // updateDateIssueButton
-            // 
-            updateDateIssueButton.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            updateDateIssueButton.Cursor = Cursors.Hand;
-            updateDateIssueButton.Location = new Point(49, 64);
-            updateDateIssueButton.Margin = new Padding(3, 2, 3, 2);
-            updateDateIssueButton.Name = "updateDateIssueButton";
-            updateDateIssueButton.Size = new Size(174, 45);
-            updateDateIssueButton.TabIndex = 8;
-            updateDateIssueButton.Text = "Указать дату выдачи\r\n(статус - выданно)";
-            updateDateIssueButton.UseVisualStyleBackColor = true;
+            Report.Location = new Point(4, 24);
+            Report.Name = "Report";
+            Report.Size = new Size(1090, 332);
+            Report.TabIndex = 5;
+            Report.Text = "Сформировать отчёт";
+            Report.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
@@ -379,6 +377,7 @@
             tabControl1.ResumeLayout(false);
             Clients.ResumeLayout(false);
             Orders.ResumeLayout(false);
+            groupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dataGrid_order).EndInit();
             Product.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dataGrid_product).EndInit();
@@ -386,7 +385,6 @@
             ((System.ComponentModel.ISupportInitialize)dataGrid_service).EndInit();
             Employee.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dataGrid_employee).EndInit();
-            groupBox1.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -405,7 +403,6 @@
         private Button add_order;
         private DataGridView dataGrid_order;
         private Button edit_product;
-        private Button add_product;
         private DataGridView dataGrid_product;
         private Button edit_service;
         private Button add_service;
@@ -416,5 +413,6 @@
         private GroupBox groupBox1;
         private Button updateDateIssueButton;
         private Button updateStatusButton;
+        private TabPage Report;
     }
 }

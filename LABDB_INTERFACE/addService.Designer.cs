@@ -29,12 +29,13 @@
         private void InitializeComponent()
         {
             label_role = new Label();
-            addButton_client = new Button();
+            addButton_service = new Button();
             label_description = new Label();
             label_ServiceName = new Label();
             textBox_description = new TextBox();
             textBox_firstname = new TextBox();
-            maskedTextBox1 = new MaskedTextBox();
+            numericUpDown_price = new NumericUpDown();
+            ((System.ComponentModel.ISupportInitialize)numericUpDown_price).BeginInit();
             SuspendLayout();
             // 
             // label_role
@@ -47,16 +48,17 @@
             label_role.TabIndex = 43;
             label_role.Text = "Стоимость услуги";
             // 
-            // addButton_client
+            // addButton_service
             // 
-            addButton_client.Cursor = Cursors.Hand;
-            addButton_client.Dock = DockStyle.Bottom;
-            addButton_client.Location = new Point(0, 130);
-            addButton_client.Name = "addButton_client";
-            addButton_client.Size = new Size(302, 63);
-            addButton_client.TabIndex = 41;
-            addButton_client.Text = "Добавить данные";
-            addButton_client.UseVisualStyleBackColor = true;
+            addButton_service.Cursor = Cursors.Hand;
+            addButton_service.Dock = DockStyle.Bottom;
+            addButton_service.Location = new Point(0, 130);
+            addButton_service.Name = "addButton_service";
+            addButton_service.Size = new Size(302, 63);
+            addButton_service.TabIndex = 41;
+            addButton_service.Text = "Добавить данные";
+            addButton_service.UseVisualStyleBackColor = true;
+            addButton_service.Click += addButton_service_Click;
             // 
             // label_description
             // 
@@ -94,29 +96,29 @@
             textBox_firstname.Size = new Size(162, 23);
             textBox_firstname.TabIndex = 35;
             // 
-            // maskedTextBox1
+            // numericUpDown_price
             // 
-            maskedTextBox1.Location = new Point(12, 87);
-            maskedTextBox1.Mask = "00000000000";
-            maskedTextBox1.Name = "maskedTextBox1";
-            maskedTextBox1.Size = new Size(160, 23);
-            maskedTextBox1.TabIndex = 44;
-            maskedTextBox1.ValidatingType = typeof(int);
+            numericUpDown_price.Location = new Point(12, 88);
+            numericUpDown_price.Maximum = new decimal(new int[] { 32767, 0, 0, 0 });
+            numericUpDown_price.Name = "numericUpDown_price";
+            numericUpDown_price.Size = new Size(162, 23);
+            numericUpDown_price.TabIndex = 45;
             // 
             // addService
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(302, 193);
-            Controls.Add(maskedTextBox1);
+            Controls.Add(numericUpDown_price);
             Controls.Add(label_role);
-            Controls.Add(addButton_client);
+            Controls.Add(addButton_service);
             Controls.Add(label_description);
             Controls.Add(label_ServiceName);
             Controls.Add(textBox_description);
             Controls.Add(textBox_firstname);
             Name = "addService";
             Text = "Добавление услуги";
+            ((System.ComponentModel.ISupportInitialize)numericUpDown_price).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -125,14 +127,14 @@
 
         private MaskedTextBox maskedTextBox_passportdata;
         private Label label_role;
-        private Button addButton_client;
+        private Button addButton_service;
         private Label label_passportdata;
         private Label label_phone;
         private Label label_description;
         private Label label_ServiceName;
         private TextBox textBox_description;
         private TextBox textBox_firstname;
-        private MaskedTextBox maskedTextBox1;
         private MaskedTextBox maskedTextBox_phone;
+        private NumericUpDown numericUpDown_price;
     }
 }

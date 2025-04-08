@@ -39,7 +39,7 @@ namespace LABDB_INTERFACE
                 if (!string.IsNullOrWhiteSpace(phone))
                 {
                     // Удаляем все нецифровые символы
-                    string cleanPhone = new(phone.Where(char.IsDigit).ToArray());
+                    string cleanPhone = new([.. phone.Where(char.IsDigit)]);
 
                     if (decimal.TryParse(cleanPhone, out decimal parsedPhone))
                     {
@@ -99,6 +99,11 @@ namespace LABDB_INTERFACE
         }
 
         private void addClient_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox_firstname_TextChanged(object sender, EventArgs e)
         {
 
         }

@@ -57,6 +57,7 @@
             textBox_firstname.Name = "textBox_firstname";
             textBox_firstname.Size = new Size(145, 23);
             textBox_firstname.TabIndex = 1;
+            textBox_firstname.TextChanged += textBox_firstname_TextChanged;
             // 
             // textBox_lastname
             // 

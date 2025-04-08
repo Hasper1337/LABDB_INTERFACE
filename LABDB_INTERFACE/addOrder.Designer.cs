@@ -32,8 +32,7 @@
             label_pickupDate = new Label();
             label_idClient_forOrder = new Label();
             numericUpDown_idClient = new NumericUpDown();
-            maskedTextBox1 = new MaskedTextBox();
-            groupBox1 = new GroupBox();
+            groupBox_Product = new GroupBox();
             checkBox_Product_lining = new CheckBox();
             label_Product_typeProduct = new Label();
             label_Product_features = new Label();
@@ -43,8 +42,25 @@
             textBox_Product_features = new TextBox();
             textBox_Product_color = new TextBox();
             textBox_typeCloath = new TextBox();
+            dateTimePicker_pickupdate = new DateTimePicker();
+            groupBox_Service = new GroupBox();
+            label7 = new Label();
+            comboBox_Employee4 = new ComboBox();
+            label6 = new Label();
+            comboBox_Employee3 = new ComboBox();
+            label5 = new Label();
+            comboBox_Employee2 = new ComboBox();
+            label4 = new Label();
+            comboBox_Employee1 = new ComboBox();
+            label3 = new Label();
+            comboBox_Service3 = new ComboBox();
+            label2 = new Label();
+            comboBox_Service2 = new ComboBox();
+            label1 = new Label();
+            comboBox_Service1 = new ComboBox();
             ((System.ComponentModel.ISupportInitialize)numericUpDown_idClient).BeginInit();
-            groupBox1.SuspendLayout();
+            groupBox_Product.SuspendLayout();
+            groupBox_Service.SuspendLayout();
             SuspendLayout();
             // 
             // addButton_order
@@ -53,7 +69,7 @@
             addButton_order.Dock = DockStyle.Bottom;
             addButton_order.Location = new Point(0, 338);
             addButton_order.Name = "addButton_order";
-            addButton_order.Size = new Size(302, 63);
+            addButton_order.Size = new Size(680, 63);
             addButton_order.TabIndex = 41;
             addButton_order.Text = "Добавить данные";
             addButton_order.UseVisualStyleBackColor = true;
@@ -61,9 +77,8 @@
             // 
             // label_pickupDate
             // 
-            label_pickupDate.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             label_pickupDate.AutoSize = true;
-            label_pickupDate.Location = new Point(178, 51);
+            label_pickupDate.Location = new Point(189, 51);
             label_pickupDate.Name = "label_pickupDate";
             label_pickupDate.Size = new Size(77, 15);
             label_pickupDate.TabIndex = 38;
@@ -71,9 +86,7 @@
             // 
             // label_idClient_forOrder
             // 
-            label_idClient_forOrder.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            label_idClient_forOrder.AutoSize = true;
-            label_idClient_forOrder.Location = new Point(178, 9);
+            label_idClient_forOrder.Location = new Point(189, 9);
             label_idClient_forOrder.Name = "label_idClient_forOrder";
             label_idClient_forOrder.Size = new Size(66, 15);
             label_idClient_forOrder.TabIndex = 37;
@@ -82,36 +95,28 @@
             // numericUpDown_idClient
             // 
             numericUpDown_idClient.Location = new Point(12, 7);
+            numericUpDown_idClient.Maximum = new decimal(new int[] { int.MaxValue, 0, 0, 0 });
             numericUpDown_idClient.Name = "numericUpDown_idClient";
             numericUpDown_idClient.Size = new Size(162, 23);
             numericUpDown_idClient.TabIndex = 45;
             // 
-            // maskedTextBox1
+            // groupBox_Product
             // 
-            maskedTextBox1.Location = new Point(12, 48);
-            maskedTextBox1.Mask = "00/00/0000";
-            maskedTextBox1.Name = "maskedTextBox1";
-            maskedTextBox1.Size = new Size(162, 23);
-            maskedTextBox1.TabIndex = 46;
-            maskedTextBox1.ValidatingType = typeof(DateTime);
-            // 
-            // groupBox1
-            // 
-            groupBox1.Controls.Add(checkBox_Product_lining);
-            groupBox1.Controls.Add(label_Product_typeProduct);
-            groupBox1.Controls.Add(label_Product_features);
-            groupBox1.Controls.Add(label_Product_color);
-            groupBox1.Controls.Add(label_Product_typeCloath);
-            groupBox1.Controls.Add(textBox_Product_typeProduct);
-            groupBox1.Controls.Add(textBox_Product_features);
-            groupBox1.Controls.Add(textBox_Product_color);
-            groupBox1.Controls.Add(textBox_typeCloath);
-            groupBox1.Location = new Point(12, 91);
-            groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(278, 234);
-            groupBox1.TabIndex = 47;
-            groupBox1.TabStop = false;
-            groupBox1.Text = "Данные изделия";
+            groupBox_Product.Controls.Add(checkBox_Product_lining);
+            groupBox_Product.Controls.Add(label_Product_typeProduct);
+            groupBox_Product.Controls.Add(label_Product_features);
+            groupBox_Product.Controls.Add(label_Product_color);
+            groupBox_Product.Controls.Add(label_Product_typeCloath);
+            groupBox_Product.Controls.Add(textBox_Product_typeProduct);
+            groupBox_Product.Controls.Add(textBox_Product_features);
+            groupBox_Product.Controls.Add(textBox_Product_color);
+            groupBox_Product.Controls.Add(textBox_typeCloath);
+            groupBox_Product.Location = new Point(12, 91);
+            groupBox_Product.Name = "groupBox_Product";
+            groupBox_Product.Size = new Size(278, 234);
+            groupBox_Product.TabIndex = 47;
+            groupBox_Product.TabStop = false;
+            groupBox_Product.Text = "Данные изделия";
             // 
             // checkBox_Product_lining
             // 
@@ -187,22 +192,166 @@
             textBox_typeCloath.Size = new Size(134, 23);
             textBox_typeCloath.TabIndex = 0;
             // 
+            // dateTimePicker_pickupdate
+            // 
+            dateTimePicker_pickupdate.Location = new Point(12, 45);
+            dateTimePicker_pickupdate.Name = "dateTimePicker_pickupdate";
+            dateTimePicker_pickupdate.Size = new Size(160, 23);
+            dateTimePicker_pickupdate.TabIndex = 48;
+            // 
+            // groupBox_Service
+            // 
+            groupBox_Service.Controls.Add(label7);
+            groupBox_Service.Controls.Add(comboBox_Employee4);
+            groupBox_Service.Controls.Add(label6);
+            groupBox_Service.Controls.Add(comboBox_Employee3);
+            groupBox_Service.Controls.Add(label5);
+            groupBox_Service.Controls.Add(comboBox_Employee2);
+            groupBox_Service.Controls.Add(label4);
+            groupBox_Service.Controls.Add(comboBox_Employee1);
+            groupBox_Service.Controls.Add(label3);
+            groupBox_Service.Controls.Add(comboBox_Service3);
+            groupBox_Service.Controls.Add(label2);
+            groupBox_Service.Controls.Add(comboBox_Service2);
+            groupBox_Service.Controls.Add(label1);
+            groupBox_Service.Controls.Add(comboBox_Service1);
+            groupBox_Service.Location = new Point(310, 12);
+            groupBox_Service.Name = "groupBox_Service";
+            groupBox_Service.Size = new Size(358, 313);
+            groupBox_Service.TabIndex = 49;
+            groupBox_Service.TabStop = false;
+            groupBox_Service.Text = "Выбор услуг(и) и сотрудника(ов)";
+            // 
+            // label7
+            // 
+            label7.Location = new Point(273, 276);
+            label7.Name = "label7";
+            label7.Size = new Size(66, 15);
+            label7.TabIndex = 50;
+            label7.Text = "Сотрудник";
+            // 
+            // comboBox_Employee4
+            // 
+            comboBox_Employee4.FormattingEnabled = true;
+            comboBox_Employee4.Location = new Point(6, 273);
+            comboBox_Employee4.Name = "comboBox_Employee4";
+            comboBox_Employee4.Size = new Size(261, 23);
+            comboBox_Employee4.TabIndex = 49;
+            // 
+            // label6
+            // 
+            label6.Location = new Point(273, 247);
+            label6.Name = "label6";
+            label6.Size = new Size(66, 15);
+            label6.TabIndex = 48;
+            label6.Text = "Сотрудник";
+            // 
+            // comboBox_Employee3
+            // 
+            comboBox_Employee3.FormattingEnabled = true;
+            comboBox_Employee3.Location = new Point(6, 244);
+            comboBox_Employee3.Name = "comboBox_Employee3";
+            comboBox_Employee3.Size = new Size(261, 23);
+            comboBox_Employee3.TabIndex = 47;
+            // 
+            // label5
+            // 
+            label5.Location = new Point(273, 213);
+            label5.Name = "label5";
+            label5.Size = new Size(66, 15);
+            label5.TabIndex = 46;
+            label5.Text = "Сотрудник";
+            // 
+            // comboBox_Employee2
+            // 
+            comboBox_Employee2.FormattingEnabled = true;
+            comboBox_Employee2.Location = new Point(6, 210);
+            comboBox_Employee2.Name = "comboBox_Employee2";
+            comboBox_Employee2.Size = new Size(261, 23);
+            comboBox_Employee2.TabIndex = 45;
+            // 
+            // label4
+            // 
+            label4.Location = new Point(273, 178);
+            label4.Name = "label4";
+            label4.Size = new Size(66, 15);
+            label4.TabIndex = 44;
+            label4.Text = "Сотрудник";
+            // 
+            // comboBox_Employee1
+            // 
+            comboBox_Employee1.FormattingEnabled = true;
+            comboBox_Employee1.Location = new Point(6, 175);
+            comboBox_Employee1.Name = "comboBox_Employee1";
+            comboBox_Employee1.Size = new Size(261, 23);
+            comboBox_Employee1.TabIndex = 43;
+            // 
+            // label3
+            // 
+            label3.Location = new Point(273, 92);
+            label3.Name = "label3";
+            label3.Size = new Size(66, 15);
+            label3.TabIndex = 42;
+            label3.Text = "Услуга";
+            // 
+            // comboBox_Service3
+            // 
+            comboBox_Service3.FormattingEnabled = true;
+            comboBox_Service3.Location = new Point(6, 89);
+            comboBox_Service3.Name = "comboBox_Service3";
+            comboBox_Service3.Size = new Size(261, 23);
+            comboBox_Service3.TabIndex = 41;
+            // 
+            // label2
+            // 
+            label2.Location = new Point(273, 63);
+            label2.Name = "label2";
+            label2.Size = new Size(66, 15);
+            label2.TabIndex = 40;
+            label2.Text = "Услуга";
+            // 
+            // comboBox_Service2
+            // 
+            comboBox_Service2.FormattingEnabled = true;
+            comboBox_Service2.Location = new Point(6, 60);
+            comboBox_Service2.Name = "comboBox_Service2";
+            comboBox_Service2.Size = new Size(261, 23);
+            comboBox_Service2.TabIndex = 39;
+            // 
+            // label1
+            // 
+            label1.Location = new Point(273, 34);
+            label1.Name = "label1";
+            label1.Size = new Size(66, 15);
+            label1.TabIndex = 38;
+            label1.Text = "Услуга";
+            // 
+            // comboBox_Service1
+            // 
+            comboBox_Service1.FormattingEnabled = true;
+            comboBox_Service1.Location = new Point(6, 31);
+            comboBox_Service1.Name = "comboBox_Service1";
+            comboBox_Service1.Size = new Size(261, 23);
+            comboBox_Service1.TabIndex = 0;
+            // 
             // addOrder
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(302, 401);
-            Controls.Add(groupBox1);
-            Controls.Add(maskedTextBox1);
+            ClientSize = new Size(680, 401);
+            Controls.Add(groupBox_Service);
+            Controls.Add(dateTimePicker_pickupdate);
+            Controls.Add(groupBox_Product);
             Controls.Add(numericUpDown_idClient);
             Controls.Add(addButton_order);
             Controls.Add(label_pickupDate);
             Controls.Add(label_idClient_forOrder);
             Name = "addOrder";
-            Text = "addOrder";
+            Text = "Добавление заказа";
             ((System.ComponentModel.ISupportInitialize)numericUpDown_idClient).EndInit();
-            groupBox1.ResumeLayout(false);
-            groupBox1.PerformLayout();
+            groupBox_Product.ResumeLayout(false);
+            groupBox_Product.PerformLayout();
+            groupBox_Service.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -212,8 +361,7 @@
         private Label label_pickupDate;
         private Label label_idClient_forOrder;
         private NumericUpDown numericUpDown_idClient;
-        private MaskedTextBox maskedTextBox1;
-        private GroupBox groupBox1;
+        private GroupBox groupBox_Product;
         private Label label_Product_typeCloath;
         private TextBox textBox_Product_typeProduct;
         private TextBox textBox_Product_features;
@@ -223,5 +371,21 @@
         private Label label_Product_features;
         private Label label_Product_color;
         private CheckBox checkBox_Product_lining;
+        private DateTimePicker dateTimePicker_pickupdate;
+        private GroupBox groupBox_Service;
+        private ComboBox comboBox_Service1;
+        private Label label3;
+        private ComboBox comboBox_Service3;
+        private Label label2;
+        private ComboBox comboBox_Service2;
+        private Label label1;
+        private Label label4;
+        private ComboBox comboBox_Employee1;
+        private Label label7;
+        private ComboBox comboBox_Employee4;
+        private Label label6;
+        private ComboBox comboBox_Employee3;
+        private Label label5;
+        private ComboBox comboBox_Employee2;
     }
 }

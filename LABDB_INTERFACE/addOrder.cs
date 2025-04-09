@@ -78,38 +78,7 @@ namespace LABDB_INTERFACE
             comboBox.SelectedIndex = -1;
         }
 
-        //private void ConfigureComboBox(System.Windows.Forms.ComboBox comboBox, DataTable dataTable, string displayMember = "name")
-        //{
-        //    comboBox.BeginUpdate();
-        //    comboBox.BindingContext = new BindingContext();
-        //    comboBox.DataSource = dataTable;
-        //    comboBox.DisplayMember = displayMember;
-        //    comboBox.ValueMember = "id";
-        //    comboBox.SelectedIndex = -1;
-        //    comboBox.EndUpdate();
-        //}
-
-
-        private void AddServiceRecord(int orderId, NpgsqlConnection conn, NpgsqlTransaction transaction)
-        {
-            foreach(var(serviceCombo, employeeCombo) in _serviceEmployeePairs)
-            {
-                if (serviceCombo.SelectedValue == null || employeeCombo.SelectedValue == null) continue;
-                int serviceId = (int)serviceCombo.SelectedValue;
-                int employeeId = (int)employeeCombo.SelectedValue;
-
-                using var cmd = new NpgsqlCommand(@"INSERT INTO public.""Service_record""
-                                                    (id_order, id_service, id_employee)
-                                                    VALUES (@id_order, @id_service, @id_employee)", conn, transaction);
-                cmd.Parameters.AddWithValue("@id_order", orderId);
-                cmd.Parameters.AddWithValue("@id_service", serviceId);
-                cmd.Parameters.AddWithValue("@id_employee", employeeId);
-
-                cmd.ExecuteNonQuery();
-            }
-        }
-
-        private void AddOrder(int id_Client, DateTime pickupDate, string status, double totalCost, DateTime date_apppr,
+        private void AddOrder(int id_Client, DateTime pickupDate, string status, DateTime date_apppr,
             string type_cloath, string color, string features, bool lining, string type_product)
         {
             using NpgsqlConnection conn = new(connectionString);
@@ -118,6 +87,21 @@ namespace LABDB_INTERFACE
                 conn.Open();
                 using NpgsqlTransaction transaction = conn.BeginTransaction();
                 int id_Order;
+
+                var selectedServiceIds = _serviceEmployeePairs
+                    .Where(pair => pair.Item1.SelectedValue != null)
+                    .Select(pair => (int)pair.Item1.SelectedValue)
+                    .Distinct()
+                    .ToList();
+
+                if (!selectedServiceIds.Any())
+                {
+                    MessageBox.Show("Не выбранно не одной услуги");
+                    return;
+                }
+
+                double totalcost = CalculateCost(selectedServiceIds);
+
                 string query_Order = @"
                 INSERT INTO public.""Order"" 
                     (id_Client, pickup_date, status, total_cost, date_appr_readiness) 
@@ -129,7 +113,7 @@ namespace LABDB_INTERFACE
                 order_command.Parameters.AddWithValue("@id_Client", id_Client);
                 order_command.Parameters.AddWithValue("@pickup_date", pickupDate);
                 order_command.Parameters.AddWithValue("@status", status);
-                order_command.Parameters.AddWithValue("@total_cost", totalCost);
+                order_command.Parameters.AddWithValue("@total_cost", totalcost);
                 order_command.Parameters.AddWithValue("@date_appr_readliness", date_apppr);
 
                 id_Order = Convert.ToInt32(order_command.ExecuteScalar()); // Получение ID заказа
@@ -153,8 +137,8 @@ namespace LABDB_INTERFACE
                 foreach (var (serviceCombo, employeeCombo) in _serviceEmployeePairs)
                 {
                     if (serviceCombo.SelectedValue == null || employeeCombo.SelectedValue == null) continue;
-                    int serviceId = (int)serviceCombo.SelectedValue;
-                    int employeeId = (int)employeeCombo.SelectedValue;
+                    int serviceId = Convert.ToInt32(serviceCombo.SelectedValue);
+                    int employeeId = Convert.ToInt32(employeeCombo.SelectedValue);
 
                     using var cmd = new NpgsqlCommand(@"INSERT INTO public.""Service_record""
                                                     (id_order, id_service, id_employee)
@@ -181,40 +165,26 @@ namespace LABDB_INTERFACE
             }
         }
 
-        //private void AddProduct(int id_order, string type_cloath, string color, string features, bool lining, string type_product)
-        //{
-        //    using NpgsqlConnection conn = new(connectionString);
-        //    try
-        //    {
-        //        conn.Open();
-        //        string query = @"
-        //        INSERT INTO public.""Product"" 
-        //            (id_Order, type_cloath, color, features, lining, type_product) 
-        //        VALUES 
-        //            (@id_Order, @type_cloath, @color, @features, @lining, @type_product)";
+        private double CalculateCost(List<int> serviceIds)
+        {
+            double totalCost = 0.0;
+            using var conn = new NpgsqlConnection(connectionString);
+            conn.Open();
 
-        //        using NpgsqlCommand cmd = new(query, conn);
+            string sql = $"SELECT SUM(cost_per_count) FROM public.\"Service\" WHERE id IN " +
+                $"({string.Join(",", serviceIds.Select((_, i) => $"@id{i}"))})";
+            using var cmd = new NpgsqlCommand(sql, conn);
+            for (int i = 0; i < serviceIds.Count; i++)
+            {
+                cmd.Parameters.AddWithValue($"@id{i}", serviceIds[i]);
+            }
+            var result = cmd.ExecuteScalar();
+            if (result != DBNull.Value && result != null) { 
+                totalCost = Convert.ToDouble(result);
+            }
 
-        //        cmd.Parameters.AddWithValue("@id_Order", id_Order);
-        //        cmd.Parameters.AddWithValue("@type_cloath", type_cloath);
-        //        cmd.Parameters.AddWithValue("@color", color);
-        //        cmd.Parameters.AddWithValue("@features", features ?? (object)DBNull.Value);
-        //        cmd.Parameters.AddWithValue("@lining", lining);
-        //        cmd.Parameters.AddWithValue("@type_product", type_product);
-
-        //        cmd.ExecuteNonQuery();
-        //        MessageBox.Show("Клиент добавлен успешно!");
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        MessageBox.Show("Ошибка при добавлении клиента: " + ex.Message);
-        //    }
-        //    finally
-        //    {
-        //        conn.Close();
-        //    }
-        //}
-
+            return totalCost;
+        }
 
         private void addButton_order_Click(object sender, EventArgs e)
         {
@@ -228,7 +198,6 @@ namespace LABDB_INTERFACE
             int id_Client = (int)numericUpDown_idClient.Value;
             DateTime pickupDate = dateTimePicker_pickupdate.Value;
             string status = "Принят";
-            double totalCost = 1.1;
             DateTime date_apppr = pickupDate.AddDays(7);
 
             /////  Блок кода сотрудник-услуга для Service_record
@@ -263,9 +232,7 @@ namespace LABDB_INTERFACE
 
 
             // Добавляем клиента в базу данных
-            AddOrder(id_Client, pickupDate, status, totalCost, date_apppr, type_cloath, color, features, lining, type_product);
-            //AddServiceRecord(id_Order);
-            //AddProduct(id_order, type_cloath, color, features, lining, type_product);
+            AddOrder(id_Client, pickupDate, status, date_apppr, type_cloath, color, features, lining, type_product);
 
             // Закрываем форму после сохранения
             this.Close();

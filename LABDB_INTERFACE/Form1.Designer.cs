@@ -183,6 +183,7 @@
             updateStatusButton.TabIndex = 7;
             updateStatusButton.Text = "Обновить статус заказа";
             updateStatusButton.UseVisualStyleBackColor = true;
+            updateStatusButton.Click += updateStatusButton_Click;
             // 
             // edit_order
             // 

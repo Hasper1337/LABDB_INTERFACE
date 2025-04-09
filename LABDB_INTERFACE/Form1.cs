@@ -134,5 +134,15 @@ namespace LABDB_INTERFACE
             AddServiceForm.ShowDialog();
             LoadService();
         }
+
+        private void updateStatusButton_Click(object sender, EventArgs e)
+        {
+            //dataGrid_order.SelectionMode = DataGridViewSelectionMode
+
+
+            updateStatusOrder updateStatusForm = new();
+            updateStatusForm.ShowDialog();
+            LoadOrders();
+        }
     }
 }

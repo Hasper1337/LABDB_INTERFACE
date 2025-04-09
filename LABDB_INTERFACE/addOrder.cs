@@ -6,6 +6,7 @@ using System.Data.Common;
 using System.Drawing;
 using System.Linq;
 using System.Net.Sockets;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
@@ -21,54 +22,92 @@ namespace LABDB_INTERFACE
         public addOrder()
         {
             InitializeComponent();
+            InitializeServiceEmployeePairs();
             LoadComboBoxData();
         }
 
         private readonly string connectionString = "Host=localhost;Port=5432;Username=postgres;Password=44961755;Database=db1.2;";
-        
-        private void LoadComboBoxData()
+        private DataTable _serviceDt;
+        private DataTable _employeeDt;
+
+        private List<Tuple<System.Windows.Forms.ComboBox, System.Windows.Forms.ComboBox>> _serviceEmployeePairs;
+
+        private void InitializeServiceEmployeePairs()
         {
-            using (var conn = new NpgsqlConnection(connectionString))
+            _serviceEmployeePairs = [
+                Tuple.Create(comboBox_Service1, comboBox_Employee1),
+                Tuple.Create(comboBox_Service2, comboBox_Employee2),
+                Tuple.Create(comboBox_Service3, comboBox_Employee3)
+        ];
+        }
+
+        private async void LoadComboBoxData()
+        {
+            using var conn = new NpgsqlConnection(connectionString);
+            await conn.OpenAsync();
+
+            // Загрузка услуг
+            _serviceDt = new DataTable();
+            using (var cmd = new NpgsqlCommand(@"SELECT id, name FROM public.""Service""", conn))
+            using (var reader = await cmd.ExecuteReaderAsync())
             {
-                conn.Open();
+                _serviceDt.Load(reader);
+            }
 
-                // Загрузка услуг
-                var serviceDt = new DataTable();
-                using (var cmd = new NpgsqlCommand(@"SELECT id, name FROM public.""Service""", conn))
-                using (var reader = cmd.ExecuteReader())
-                {
-                    serviceDt.Load(reader);
-                }
+            // Загрузка сотрудников с объединенным именем
+            _employeeDt = new DataTable();
+            using (var cmd = new NpgsqlCommand(@"SELECT id, first_name || ' ' || last_name AS full_name FROM public.""Employee""", conn))
+            using (var reader = await cmd.ExecuteReaderAsync())
+            {
+                _employeeDt.Load(reader);
+            }
 
-                ConfigureComboBox(comboBox_Service1, serviceDt);
-                ConfigureComboBox(comboBox_Service2, serviceDt);
-                ConfigureComboBox(comboBox_Service3, serviceDt);
-
-                // Загрузка сотрудников с объединенным именем
-                var employeeDt = new DataTable();
-                using (var cmd = new NpgsqlCommand(@"SELECT id, first_name || ' ' || last_name AS full_name FROM public.""Employee""", conn))
-                using (var reader = cmd.ExecuteReader())
-                {
-                    employeeDt.Load(reader);
-                }
-
-                ConfigureComboBox(comboBox_Employee1, employeeDt, "full_name");
-                ConfigureComboBox(comboBox_Employee2, employeeDt, "full_name");
-                ConfigureComboBox(comboBox_Employee3, employeeDt, "full_name");
-                ConfigureComboBox(comboBox_Employee4, employeeDt, "full_name");
+            foreach(var (serviceCombo, employeeCombo) in _serviceEmployeePairs)
+            {
+                InitializeComboBox(serviceCombo, _serviceDt, "name");
+                InitializeComboBox(employeeCombo, _employeeDt, "full_name");
             }
         }
 
-        private void ConfigureComboBox(System.Windows.Forms.ComboBox comboBox, DataTable dataTable, string displayMember = "name")
+
+        private void InitializeComboBox(System.Windows.Forms.ComboBox comboBox, DataTable dataTable, string displayMember)
         {
-            comboBox.BeginUpdate();
-            comboBox.BindingContext = new BindingContext();
-            comboBox.DataSource = dataTable;
+            comboBox.DataSource = dataTable.Copy();
             comboBox.DisplayMember = displayMember;
             comboBox.ValueMember = "id";
-            comboBox.EndUpdate();
+            comboBox.SelectedIndex = -1;
         }
 
+        //private void ConfigureComboBox(System.Windows.Forms.ComboBox comboBox, DataTable dataTable, string displayMember = "name")
+        //{
+        //    comboBox.BeginUpdate();
+        //    comboBox.BindingContext = new BindingContext();
+        //    comboBox.DataSource = dataTable;
+        //    comboBox.DisplayMember = displayMember;
+        //    comboBox.ValueMember = "id";
+        //    comboBox.SelectedIndex = -1;
+        //    comboBox.EndUpdate();
+        //}
+
+
+        private void AddServiceRecord(int orderId, NpgsqlConnection conn, NpgsqlTransaction transaction)
+        {
+            foreach(var(serviceCombo, employeeCombo) in _serviceEmployeePairs)
+            {
+                if (serviceCombo.SelectedValue == null || employeeCombo.SelectedValue == null) continue;
+                int serviceId = (int)serviceCombo.SelectedValue;
+                int employeeId = (int)employeeCombo.SelectedValue;
+
+                using var cmd = new NpgsqlCommand(@"INSERT INTO public.""Service_record""
+                                                    (id_order, id_service, id_employee)
+                                                    VALUES (@id_order, @id_service, @id_employee)", conn, transaction);
+                cmd.Parameters.AddWithValue("@id_order", orderId);
+                cmd.Parameters.AddWithValue("@id_service", serviceId);
+                cmd.Parameters.AddWithValue("@id_employee", employeeId);
+
+                cmd.ExecuteNonQuery();
+            }
+        }
 
         private void AddOrder(int id_Client, DateTime pickupDate, string status, double totalCost, DateTime date_apppr,
             string type_cloath, string color, string features, bool lining, string type_product)
@@ -109,6 +148,24 @@ namespace LABDB_INTERFACE
                 product_command.Parameters.AddWithValue("@features", features ?? (object)DBNull.Value);
                 product_command.Parameters.AddWithValue("@lining", lining);
                 product_command.Parameters.AddWithValue("@type_product", type_product);
+
+                /// Блок кода для пары сотрудник-услуга
+                foreach (var (serviceCombo, employeeCombo) in _serviceEmployeePairs)
+                {
+                    if (serviceCombo.SelectedValue == null || employeeCombo.SelectedValue == null) continue;
+                    int serviceId = (int)serviceCombo.SelectedValue;
+                    int employeeId = (int)employeeCombo.SelectedValue;
+
+                    using var cmd = new NpgsqlCommand(@"INSERT INTO public.""Service_record""
+                                                    (id_order, id_service, id_employee)
+                                                    VALUES (@id_order, @id_service, @id_employee)", conn, transaction);
+                    cmd.Parameters.AddWithValue("@id_order", id_Order);
+                    cmd.Parameters.AddWithValue("@id_service", serviceId);
+                    cmd.Parameters.AddWithValue("@id_employee", employeeId);
+
+                    cmd.ExecuteNonQuery();
+                }
+                ///
 
                 product_command.ExecuteNonQuery();
                 transaction.Commit();
@@ -174,16 +231,30 @@ namespace LABDB_INTERFACE
             double totalCost = 1.1;
             DateTime date_apppr = pickupDate.AddDays(7);
 
-            //int ServiceID1 = (int)comboBox_Service1.SelectedValue;
-            //int ServiceID2 = (int)comboBox_Service2.SelectedValue;
-            //int ServiceID3 = (int)comboBox_Service3.SelectedValue;
-
-            //int EmployeeID1 = (int)comboBox_Employee1.SelectedValue;
-            //int EmployeeID2 = (int)comboBox_Employee2.SelectedValue;
-            //int EmployeeID3 = (int)comboBox_Employee3.SelectedValue;
-            //int EmployeeID4 = (int)comboBox_Employee4.SelectedValue;
+            /////  Блок кода сотрудник-услуга для Service_record
+            bool hasValidPiar = _serviceEmployeePairs.Any(pair => pair.Item1.SelectedValue != null &&
+            pair.Item2.SelectedValue != null);
 
 
+            if (!hasValidPiar)
+            {
+                MessageBox.Show("Необходимо указать хотя бы одну пару Услуга-Сотрудник!");
+                return;
+            }
+
+            var employeeIds = new HashSet<int>();
+            foreach(var (_, employeeCombo) in _serviceEmployeePairs)
+            {
+                if (employeeCombo.SelectedValue == null) continue;
+
+                int id = (int)employeeCombo.SelectedValue;
+                if (!employeeIds.Add(id))
+                {
+                    MessageBox.Show("Сотрудник не может быть назначен на несколько услуг!");
+                    return;
+                }
+            }
+            /////
             string type_cloath = textBox_typeCloath.Text;
             string color = textBox_Product_color.Text;
             string features = textBox_Product_features.Text;
@@ -193,6 +264,7 @@ namespace LABDB_INTERFACE
 
             // Добавляем клиента в базу данных
             AddOrder(id_Client, pickupDate, status, totalCost, date_apppr, type_cloath, color, features, lining, type_product);
+            //AddServiceRecord(id_Order);
             //AddProduct(id_order, type_cloath, color, features, lining, type_product);
 
             // Закрываем форму после сохранения

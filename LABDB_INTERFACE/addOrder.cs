@@ -62,7 +62,7 @@ namespace LABDB_INTERFACE
                 _employeeDt.Load(reader);
             }
 
-            foreach(var (serviceCombo, employeeCombo) in _serviceEmployeePairs)
+            foreach (var (serviceCombo, employeeCombo) in _serviceEmployeePairs)
             {
                 InitializeComboBox(serviceCombo, _serviceDt, "name");
                 InitializeComboBox(employeeCombo, _employeeDt, "full_name");
@@ -179,7 +179,8 @@ namespace LABDB_INTERFACE
                 cmd.Parameters.AddWithValue($"@id{i}", serviceIds[i]);
             }
             var result = cmd.ExecuteScalar();
-            if (result != DBNull.Value && result != null) { 
+            if (result != DBNull.Value && result != null)
+            {
                 totalCost = Convert.ToDouble(result);
             }
 
@@ -212,7 +213,7 @@ namespace LABDB_INTERFACE
             }
 
             var employeeIds = new HashSet<int>();
-            foreach(var (_, employeeCombo) in _serviceEmployeePairs)
+            foreach (var (_, employeeCombo) in _serviceEmployeePairs)
             {
                 if (employeeCombo.SelectedValue == null) continue;
 
@@ -236,6 +237,11 @@ namespace LABDB_INTERFACE
 
             // Закрываем форму после сохранения
             this.Close();
+        }
+
+        private void numericUpDown_idClient_ValueChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

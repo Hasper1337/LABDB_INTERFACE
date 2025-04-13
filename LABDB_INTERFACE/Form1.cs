@@ -220,6 +220,131 @@ namespace LABDB_INTERFACE
 
         private void add_service_Click(object sender, EventArgs e)
             => AddData.ShowFormAndReload<addService>(() => LoadData(dataGrid_service, "Service"));
+
+        private void WriteReportBtn_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                using var conn = new NpgsqlConnection(connectionString);
+                conn.Open();
+
+                int id = (int)numericUpDown_employee.Value;
+                if (id <= 0)
+                {
+                    string queryifidnull = @"
+            SELECT 
+                e.id,
+                e.first_name ||' '|| e.last_name AS ""Сотрудник"",
+                o.id AS ""Номер заказа"",
+                o.pickup_date AS ""Дата приёма"",
+                p.type_product AS ""Изделие""
+            FROM public.""Employee"" e
+            JOIN public.""Service_record"" sr ON e.id = sr.""id_employee""
+            JOIN public.""Order"" o ON o.id = sr.""id_order""
+            JOIN public.""Product"" p ON o.id = p.""id_order""
+            ORDER BY e.id asc;";
+                    using var cmd = new NpgsqlCommand(queryifidnull, conn);
+                    using var adapter = new NpgsqlDataAdapter(cmd);
+                    DataTable dt = new DataTable();
+                    adapter.Fill(dt);
+                    dataGridView_report.DataSource = dt;
+                }
+                else
+                {
+                    string queryifidnotnull = @"
+            SELECT 
+                e.id,
+                e.first_name ||' '|| e.last_name AS ""Сотрудник"",
+                o.id AS ""Номер заказа"",
+                o.pickup_date AS ""Дата приёма"",
+                p.type_product AS ""Изделие""
+            FROM public.""Employee"" e
+            JOIN public.""Service_record"" sr ON e.id = sr.""id_employee""
+            JOIN public.""Order"" o ON o.id = sr.""id_order""
+            JOIN public.""Product"" p ON o.id = p.""id_order""
+            WHERE e.id = @id
+            ORDER BY e.id asc;";
+                    using var cmd = new NpgsqlCommand(queryifidnotnull, conn);
+                    using var adapter = new NpgsqlDataAdapter(cmd);
+                    
+                    cmd.Parameters.AddWithValue("@id", id);
+
+                    DataTable dt = new DataTable();
+                    adapter.Fill(dt);
+                    dataGridView_report.DataSource = dt;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ошибка" + ex);
+            }
+        }
+
+        private void WriteReportBtn_client_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                using var conn = new NpgsqlConnection(connectionString);
+                conn.Open();
+
+                int id = (int)numericUpDown_client.Value;
+                if (id <= 0)
+                {
+                    string queryifidnull = @"
+            SELECT 
+                c.id,
+                c.first_name ||' '|| c.last_name AS ""Клиент"",
+                o.id AS ""Номер заказа"",
+                o.pickup_date AS ""Дата приёма"",
+                STRING_AGG(s.name, ', ') AS ""Услуги""
+            FROM public.""Client"" c
+            JOIN public.""Order"" o ON c.id = o.""id_client""
+            JOIN public.""Service_record"" sr ON o.id = sr.""id_order""
+            JOIN public.""Service"" s ON s.id = sr.""id_service""
+            GROUP BY c.id, c.first_name, c.last_name, o.id, o.pickup_date       
+            ORDER BY c.id asc;";
+                    using var cmd = new NpgsqlCommand(queryifidnull, conn);
+                    using var adapter = new NpgsqlDataAdapter(cmd);
+                    DataTable dt = new DataTable();
+                    adapter.Fill(dt);
+                    dataGridView_report.DataSource = dt;
+                }
+                else
+                {
+                    string queryifidnotnull = @"
+            SELECT 
+                c.id,
+                c.first_name ||' '|| c.last_name AS ""Клиент"",
+                o.id AS ""Номер заказа"",
+                o.pickup_date AS ""Дата приёма"",
+                STRING_AGG(s.name, ', ') AS ""Услуги""
+            FROM public.""Client"" c
+            JOIN public.""Order"" o ON c.id = o.""id_client""
+            JOIN public.""Service_record"" sr ON o.id = sr.""id_order""
+            JOIN public.""Service"" s ON s.id = sr.""id_service""
+            WHERE c.id = @id
+            GROUP BY c.id, c.first_name, c.last_name, o.id, o.pickup_date       
+            ORDER BY c.id asc;";
+                    using var cmd = new NpgsqlCommand(queryifidnotnull, conn);
+                    using var adapter = new NpgsqlDataAdapter(cmd);
+
+                    cmd.Parameters.AddWithValue("@id", id);
+
+                    DataTable dt = new DataTable();
+                    adapter.Fill(dt);
+                    dataGridView_report.DataSource = dt;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ошибка" + ex);
+            }
+        }
+
+        private void WriteReportBtn_order_Click(object sender, EventArgs e)
+        {
+
+        }
         /// Кнопки добавления
         /// 
 
@@ -259,7 +384,7 @@ namespace LABDB_INTERFACE
                 }
             }
         }
-            //=> AddData.ShowFormAndReload<updateStatusOrder>(() => LoadData(dataGrid_order, "Order"));
+        //=> AddData.ShowFormAndReload<updateStatusOrder>(() => LoadData(dataGrid_order, "Order"));
 
         private void edit_product_Click(object sender, EventArgs e) // Над вещами надо поработать
             => SaveData(dataGrid_product, "Product");
@@ -279,7 +404,7 @@ namespace LABDB_INTERFACE
             }
 
             DataGridViewRow selectedRow = dataGrid_order.SelectedRows[0];
-            
+
             if (selectedRow.Cells["id"].Value != DBNull.Value)
             {
                 int orderId = Convert.ToInt32(selectedRow.Cells["id"].Value);
@@ -297,6 +422,9 @@ namespace LABDB_INTERFACE
                 }
             }
         }
+
+
+
         /// Кнопки редактирования
         /// 
     }

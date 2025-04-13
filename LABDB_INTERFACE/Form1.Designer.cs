@@ -52,6 +52,13 @@
             add_employee = new Button();
             dataGrid_employee = new DataGridView();
             Report = new TabPage();
+            numericUpDown_order = new NumericUpDown();
+            numericUpDown_client = new NumericUpDown();
+            numericUpDown_employee = new NumericUpDown();
+            WriteReportBtn_order = new Button();
+            WriteReportBtn_client = new Button();
+            WriteReportBtn = new Button();
+            dataGridView_report = new DataGridView();
             ((System.ComponentModel.ISupportInitialize)datagrid_client).BeginInit();
             tabControl1.SuspendLayout();
             Clients.SuspendLayout();
@@ -64,6 +71,11 @@
             ((System.ComponentModel.ISupportInitialize)dataGrid_service).BeginInit();
             Employee.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGrid_employee).BeginInit();
+            Report.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)numericUpDown_order).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDown_client).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDown_employee).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dataGridView_report).BeginInit();
             SuspendLayout();
             // 
             // datagrid_client
@@ -74,7 +86,7 @@
             datagrid_client.Margin = new Padding(3, 2, 3, 2);
             datagrid_client.Name = "datagrid_client";
             datagrid_client.RowHeadersWidth = 51;
-            datagrid_client.Size = new Size(759, 328);
+            datagrid_client.Size = new Size(759, 333);
             datagrid_client.TabIndex = 0;
             // 
             // tabControl1
@@ -90,7 +102,7 @@
             tabControl1.Margin = new Padding(3, 2, 3, 2);
             tabControl1.Name = "tabControl1";
             tabControl1.SelectedIndex = 0;
-            tabControl1.Size = new Size(1098, 360);
+            tabControl1.Size = new Size(1117, 365);
             tabControl1.TabIndex = 1;
             // 
             // Clients
@@ -102,7 +114,7 @@
             Clients.Margin = new Padding(3, 2, 3, 2);
             Clients.Name = "Clients";
             Clients.Padding = new Padding(3, 2, 3, 2);
-            Clients.Size = new Size(1090, 332);
+            Clients.Size = new Size(1109, 337);
             Clients.TabIndex = 0;
             Clients.Text = "Клиенты";
             Clients.UseVisualStyleBackColor = true;
@@ -143,7 +155,7 @@
             Orders.Margin = new Padding(3, 2, 3, 2);
             Orders.Name = "Orders";
             Orders.Padding = new Padding(3, 2, 3, 2);
-            Orders.Size = new Size(1090, 332);
+            Orders.Size = new Size(1109, 337);
             Orders.TabIndex = 1;
             Orders.Text = "Заказы";
             Orders.UseVisualStyleBackColor = true;
@@ -220,7 +232,7 @@
             dataGrid_order.Margin = new Padding(3, 2, 3, 2);
             dataGrid_order.Name = "dataGrid_order";
             dataGrid_order.RowHeadersWidth = 51;
-            dataGrid_order.Size = new Size(759, 328);
+            dataGrid_order.Size = new Size(759, 333);
             dataGrid_order.TabIndex = 3;
             // 
             // Product
@@ -230,7 +242,7 @@
             Product.Location = new Point(4, 24);
             Product.Margin = new Padding(3, 2, 3, 2);
             Product.Name = "Product";
-            Product.Size = new Size(1090, 332);
+            Product.Size = new Size(1109, 337);
             Product.TabIndex = 2;
             Product.Text = "Вещи";
             Product.UseVisualStyleBackColor = true;
@@ -256,7 +268,7 @@
             dataGrid_product.Margin = new Padding(3, 2, 3, 2);
             dataGrid_product.Name = "dataGrid_product";
             dataGrid_product.RowHeadersWidth = 51;
-            dataGrid_product.Size = new Size(759, 332);
+            dataGrid_product.Size = new Size(759, 337);
             dataGrid_product.TabIndex = 3;
             // 
             // Service
@@ -267,7 +279,7 @@
             Service.Location = new Point(4, 24);
             Service.Margin = new Padding(3, 2, 3, 2);
             Service.Name = "Service";
-            Service.Size = new Size(1090, 332);
+            Service.Size = new Size(1109, 337);
             Service.TabIndex = 3;
             Service.Text = "Услуги";
             Service.UseVisualStyleBackColor = true;
@@ -317,7 +329,7 @@
             Employee.Location = new Point(4, 24);
             Employee.Margin = new Padding(3, 2, 3, 2);
             Employee.Name = "Employee";
-            Employee.Size = new Size(1090, 332);
+            Employee.Size = new Size(1109, 337);
             Employee.TabIndex = 4;
             Employee.Text = "Сотрудники";
             Employee.UseVisualStyleBackColor = true;
@@ -329,7 +341,7 @@
             edit_employee.Location = new Point(788, 82);
             edit_employee.Margin = new Padding(3, 2, 3, 2);
             edit_employee.Name = "edit_employee";
-            edit_employee.Size = new Size(279, 46);
+            edit_employee.Size = new Size(282, 46);
             edit_employee.TabIndex = 5;
             edit_employee.Text = "Редактирование данных";
             edit_employee.UseVisualStyleBackColor = true;
@@ -342,7 +354,7 @@
             add_employee.Location = new Point(788, 13);
             add_employee.Margin = new Padding(3, 2, 3, 2);
             add_employee.Name = "add_employee";
-            add_employee.Size = new Size(279, 46);
+            add_employee.Size = new Size(282, 46);
             add_employee.TabIndex = 4;
             add_employee.Text = "Добавить сотрудника";
             add_employee.UseVisualStyleBackColor = true;
@@ -356,23 +368,104 @@
             dataGrid_employee.Margin = new Padding(3, 2, 3, 2);
             dataGrid_employee.Name = "dataGrid_employee";
             dataGrid_employee.RowHeadersWidth = 51;
-            dataGrid_employee.Size = new Size(759, 332);
+            dataGrid_employee.Size = new Size(759, 337);
             dataGrid_employee.TabIndex = 3;
             // 
             // Report
             // 
+            Report.Controls.Add(numericUpDown_order);
+            Report.Controls.Add(numericUpDown_client);
+            Report.Controls.Add(numericUpDown_employee);
+            Report.Controls.Add(WriteReportBtn_order);
+            Report.Controls.Add(WriteReportBtn_client);
+            Report.Controls.Add(WriteReportBtn);
+            Report.Controls.Add(dataGridView_report);
             Report.Location = new Point(4, 24);
             Report.Name = "Report";
-            Report.Size = new Size(1090, 332);
+            Report.Size = new Size(1109, 337);
             Report.TabIndex = 5;
             Report.Text = "Сформировать отчёт";
             Report.UseVisualStyleBackColor = true;
+            // 
+            // numericUpDown_order
+            // 
+            numericUpDown_order.Location = new Point(1001, 165);
+            numericUpDown_order.Maximum = new decimal(new int[] { int.MaxValue, 0, 0, 0 });
+            numericUpDown_order.Name = "numericUpDown_order";
+            numericUpDown_order.Size = new Size(54, 23);
+            numericUpDown_order.TabIndex = 10;
+            // 
+            // numericUpDown_client
+            // 
+            numericUpDown_client.Location = new Point(1001, 97);
+            numericUpDown_client.Maximum = new decimal(new int[] { int.MaxValue, 0, 0, 0 });
+            numericUpDown_client.Name = "numericUpDown_client";
+            numericUpDown_client.Size = new Size(54, 23);
+            numericUpDown_client.TabIndex = 9;
+            // 
+            // numericUpDown_employee
+            // 
+            numericUpDown_employee.Location = new Point(1001, 32);
+            numericUpDown_employee.Maximum = new decimal(new int[] { int.MaxValue, 0, 0, 0 });
+            numericUpDown_employee.Name = "numericUpDown_employee";
+            numericUpDown_employee.Size = new Size(54, 23);
+            numericUpDown_employee.TabIndex = 8;
+            // 
+            // WriteReportBtn_order
+            // 
+            WriteReportBtn_order.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            WriteReportBtn_order.Cursor = Cursors.Hand;
+            WriteReportBtn_order.Location = new Point(789, 151);
+            WriteReportBtn_order.Margin = new Padding(3, 2, 3, 2);
+            WriteReportBtn_order.Name = "WriteReportBtn_order";
+            WriteReportBtn_order.Size = new Size(206, 46);
+            WriteReportBtn_order.TabIndex = 7;
+            WriteReportBtn_order.Text = "Сформировать отчет по заказам";
+            WriteReportBtn_order.UseVisualStyleBackColor = true;
+            WriteReportBtn_order.Click += WriteReportBtn_order_Click;
+            // 
+            // WriteReportBtn_client
+            // 
+            WriteReportBtn_client.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            WriteReportBtn_client.Cursor = Cursors.Hand;
+            WriteReportBtn_client.Location = new Point(789, 83);
+            WriteReportBtn_client.Margin = new Padding(3, 2, 3, 2);
+            WriteReportBtn_client.Name = "WriteReportBtn_client";
+            WriteReportBtn_client.Size = new Size(206, 46);
+            WriteReportBtn_client.TabIndex = 6;
+            WriteReportBtn_client.Text = "Сформировать отчет по клиентам";
+            WriteReportBtn_client.UseVisualStyleBackColor = true;
+            WriteReportBtn_client.Click += WriteReportBtn_client_Click;
+            // 
+            // WriteReportBtn
+            // 
+            WriteReportBtn.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            WriteReportBtn.Cursor = Cursors.Hand;
+            WriteReportBtn.Location = new Point(789, 18);
+            WriteReportBtn.Margin = new Padding(3, 2, 3, 2);
+            WriteReportBtn.Name = "WriteReportBtn";
+            WriteReportBtn.Size = new Size(206, 46);
+            WriteReportBtn.TabIndex = 5;
+            WriteReportBtn.Text = "Сформировать отчет по сотрудникам";
+            WriteReportBtn.UseVisualStyleBackColor = true;
+            WriteReportBtn.Click += WriteReportBtn_Click;
+            // 
+            // dataGridView_report
+            // 
+            dataGridView_report.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridView_report.Dock = DockStyle.Left;
+            dataGridView_report.Location = new Point(0, 0);
+            dataGridView_report.Margin = new Padding(3, 2, 3, 2);
+            dataGridView_report.Name = "dataGridView_report";
+            dataGridView_report.RowHeadersWidth = 51;
+            dataGridView_report.Size = new Size(759, 337);
+            dataGridView_report.TabIndex = 4;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1097, 358);
+            ClientSize = new Size(1116, 363);
             Controls.Add(tabControl1);
             Margin = new Padding(3, 2, 3, 2);
             Name = "Form1";
@@ -390,6 +483,11 @@
             ((System.ComponentModel.ISupportInitialize)dataGrid_service).EndInit();
             Employee.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dataGrid_employee).EndInit();
+            Report.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)numericUpDown_order).EndInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDown_client).EndInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDown_employee).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dataGridView_report).EndInit();
             ResumeLayout(false);
         }
 
@@ -419,5 +517,12 @@
         private Button updateDateIssueButton;
         private Button updateStatusButton;
         private TabPage Report;
+        private DataGridView dataGridView_report;
+        private Button WriteReportBtn;
+        private NumericUpDown numericUpDown_order;
+        private NumericUpDown numericUpDown_client;
+        private NumericUpDown numericUpDown_employee;
+        private Button WriteReportBtn_order;
+        private Button WriteReportBtn_client;
     }
 }

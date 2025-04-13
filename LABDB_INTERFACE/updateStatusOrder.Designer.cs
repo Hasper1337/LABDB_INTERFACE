@@ -31,9 +31,7 @@
             updateButton = new Button();
             comboBox_status = new ComboBox();
             label_status = new Label();
-            numericUpDown_idOrder = new NumericUpDown();
             label_idOrder = new Label();
-            ((System.ComponentModel.ISupportInitialize)numericUpDown_idOrder).BeginInit();
             SuspendLayout();
             // 
             // updateButton
@@ -65,17 +63,10 @@
             label_status.TabIndex = 2;
             label_status.Text = "Статус заказа";
             // 
-            // numericUpDown_idOrder
-            // 
-            numericUpDown_idOrder.Location = new Point(12, 12);
-            numericUpDown_idOrder.Name = "numericUpDown_idOrder";
-            numericUpDown_idOrder.Size = new Size(212, 23);
-            numericUpDown_idOrder.TabIndex = 3;
-            // 
             // label_idOrder
             // 
             label_idOrder.AutoSize = true;
-            label_idOrder.Location = new Point(230, 14);
+            label_idOrder.Location = new Point(12, 9);
             label_idOrder.Name = "label_idOrder";
             label_idOrder.Size = new Size(55, 15);
             label_idOrder.TabIndex = 4;
@@ -87,13 +78,11 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(353, 149);
             Controls.Add(label_idOrder);
-            Controls.Add(numericUpDown_idOrder);
             Controls.Add(label_status);
             Controls.Add(comboBox_status);
             Controls.Add(updateButton);
             Name = "updateStatusOrder";
             Text = "Обновление статуса заказа";
-            ((System.ComponentModel.ISupportInitialize)numericUpDown_idOrder).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -103,7 +92,6 @@
         private Button updateButton;
         private ComboBox comboBox_status;
         private Label label_status;
-        private NumericUpDown numericUpDown_idOrder;
         private Label label_idOrder;
     }
 }

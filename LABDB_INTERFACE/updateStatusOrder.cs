@@ -20,9 +20,12 @@ namespace LABDB_INTERFACE
 {
     public partial class updateStatusOrder : Form
     {
-        public updateStatusOrder()
+        private readonly int _orderId;
+        public updateStatusOrder(int orderId)
         {
             InitializeComponent();
+            _orderId = orderId;
+            label_idOrder.Text = $"Номер заказа: {_orderId}";
         }
 
         private readonly string connectionString = "Host=localhost;Port=5432;Username=postgres;Password=44961755;Database=db1.2;";
@@ -35,10 +38,20 @@ namespace LABDB_INTERFACE
             using NpgsqlCommand update_command = new(cmd, conn);
 
             update_command.Parameters.AddWithValue("@status", comboBox_status.SelectedItem.ToString());
-            update_command.Parameters.AddWithValue("@id", (int)numericUpDown_idOrder.Value);
+            update_command.Parameters.AddWithValue("@id", _orderId);
 
-            update_command.ExecuteNonQuery();
-            this.Close();
+            try
+            {
+                update_command.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка сохранения: {ex.Message}");
+                DialogResult = DialogResult.None; // Отмена закрытия формы
+            }
+
+            DialogResult = DialogResult.OK;
+            Close();
         }
     }
 }

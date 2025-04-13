@@ -76,7 +76,6 @@
             datagrid_client.RowHeadersWidth = 51;
             datagrid_client.Size = new Size(759, 328);
             datagrid_client.TabIndex = 0;
-            datagrid_client.CellContentClick += datagrid_client_CellContentClick;
             // 
             // tabControl1
             // 
@@ -119,6 +118,7 @@
             edit_client.TabIndex = 2;
             edit_client.Text = "Редактирование данных";
             edit_client.UseVisualStyleBackColor = true;
+            edit_client.Click += edit_client_Click;
             // 
             // add_client
             // 
@@ -171,6 +171,7 @@
             updateDateIssueButton.TabIndex = 8;
             updateDateIssueButton.Text = "Указать дату выдачи\r\n(статус - выданно)";
             updateDateIssueButton.UseVisualStyleBackColor = true;
+            updateDateIssueButton.Click += updateDateIssueButton_Click;
             // 
             // updateStatusButton
             // 
@@ -245,6 +246,7 @@
             edit_product.TabIndex = 5;
             edit_product.Text = "Редактирование данных";
             edit_product.UseVisualStyleBackColor = true;
+            edit_product.Click += edit_product_Click;
             // 
             // dataGrid_product
             // 
@@ -281,6 +283,7 @@
             edit_service.TabIndex = 5;
             edit_service.Text = "Редактирование данных";
             edit_service.UseVisualStyleBackColor = true;
+            edit_service.Click += edit_service_Click;
             // 
             // add_service
             // 
@@ -330,6 +333,7 @@
             edit_employee.TabIndex = 5;
             edit_employee.Text = "Редактирование данных";
             edit_employee.UseVisualStyleBackColor = true;
+            edit_employee.Click += edit_employee_Click;
             // 
             // add_employee
             // 

@@ -10,8 +10,10 @@
 
 using System;
 using System.Data;
+using System.Security.Cryptography;
 using System.Windows.Forms;
 using Npgsql;
+using static System.ComponentModel.Design.ObjectSelectorEditor;
 
 namespace LABDB_INTERFACE
 {
@@ -44,54 +46,6 @@ namespace LABDB_INTERFACE
             }
         }
 
-
-        //public static class AddData
-        //{
-        //    public static void ShowFormAndReload<TForm>(Action reloadAction)
-        //        where TForm : Form, new()
-        //    {
-        //        using (TForm form = new())
-        //        {
-        //            form.ShowDialog();
-        //        }
-        //        reloadAction?.Invoke();
-        //    }
-        //}
-
-
-        //public class DataManager(string connectionString) //Класс заполнения и сохранения
-        //{
-        //    private readonly string _connectionString = connectionString;
-
-        //    public void Fill(DataGridView grid, string tableName)
-        //    {
-        //        using var connection = new NpgsqlConnection(_connectionString);
-        //        using var adapter = new NpgsqlDataAdapter($"SELECT * FROM {tableName}", connection);
-        //        var dt = new DataTable();
-        //        adapter.Fill(dt);
-        //        grid.DataSource = dt;
-        //    }
-
-        //    public void Save(DataGridView grid, string tableName)
-        //    {
-        //        try
-        //        {
-        //            if (grid.InvokeRequired || grid.DataSource is not DataTable dt) return;
-
-        //            using var connection = new NpgsqlConnection(connectionString);
-        //            connection.Open();
-
-        //            using var adapter = new NpgsqlDataAdapter($"SELECT * FROM {tableName}", connection);
-        //            new NpgsqlCommandBuilder(adapter);
-        //            adapter.Update(dt);
-        //            dt.AcceptChanges();
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            throw new ApplicationException($"Ошибка сохранения данных для таблицы {tableName}", ex);
-        //        }
-        //    }
-        //}
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -146,24 +100,6 @@ namespace LABDB_INTERFACE
 
             public void Save(DataGridView grid, string tableName)
             {
-                //try
-                //{
-                //    if (grid.InvokeRequired || grid.DataSource is not DataTable dt) return;
-
-                //    using var connection = new NpgsqlConnection(connectionString);
-                //    connection.Open();
-
-                //    using var adapter = new NpgsqlDataAdapter($"SELECT * FROM {tableName}", connection);
-                //    new NpgsqlCommandBuilder(adapter);
-                //    adapter.Update(dt);
-                //    dt.AcceptChanges();
-                //}
-                //catch (Exception ex)
-                //{
-                //    throw new ApplicationException($"Ошибка сохранения данных для таблицы {tableName}", ex);
-                //}
-
-
                 if (grid.DataSource is not DataTable dt) return;
 
                 DataTable changes = dt.GetChanges(DataRowState.Modified | DataRowState.Added);
@@ -221,7 +157,7 @@ namespace LABDB_INTERFACE
         private void add_service_Click(object sender, EventArgs e)
             => AddData.ShowFormAndReload<addService>(() => LoadData(dataGrid_service, "Service"));
 
-        private void WriteReportBtn_Click(object sender, EventArgs e)
+        private void WriteReportBtn_Click(object sender, EventArgs e) // запрос на возвращение определенного кортежа по первичному ключу
         {
             try
             {
@@ -266,7 +202,7 @@ namespace LABDB_INTERFACE
             ORDER BY e.id asc;";
                     using var cmd = new NpgsqlCommand(queryifidnotnull, conn);
                     using var adapter = new NpgsqlDataAdapter(cmd);
-                    
+
                     cmd.Parameters.AddWithValue("@id", id);
 
                     DataTable dt = new DataTable();
@@ -361,7 +297,7 @@ namespace LABDB_INTERFACE
         {
             if (dataGrid_order.SelectedRows.Count == 0)
             {
-                MessageBox.Show("Пожалуйста, выберите заказ из списка");
+                MessageBox.Show("Пожалуйста, выберите заказ из таблицы");
                 return;
             }
 
@@ -423,7 +359,246 @@ namespace LABDB_INTERFACE
             }
         }
 
+        private void DelBtn_product_Click(object sender, EventArgs e) // Запрос на удаление. 
+        {
+            using var conn = new NpgsqlConnection(connectionString);
+            conn.Open();
+            string cmd = (@"DELETE FROM public.""Product"" WHERE id = @id;");
 
+            if (dataGrid_product.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Пожалуйста, выберите вещь из таблицы");
+                return;
+            }
+
+            DataGridViewRow selectedRow = dataGrid_product.SelectedRows[0];
+
+            if (selectedRow.Cells["id"].Value != DBNull.Value)
+            {
+                int productId = Convert.ToInt32(selectedRow.Cells["id"].Value);
+
+                using NpgsqlCommand update_command = new(cmd, conn);
+                update_command.Parameters.AddWithValue("@id", productId);
+                try
+                {
+                    update_command.ExecuteNonQuery();
+                    LoadData(dataGrid_product, "Product");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Ошибка удаления: {ex.Message}");
+                }
+            }
+
+        }
+
+        private void SelBtn_client_Click(object sender, EventArgs e) // Запрос на выборку последних 15 записей. 
+        {
+            using NpgsqlConnection conn = new(connectionString);
+            conn.Open();
+            string cmd = (@"SELECT * FROM public.""Client""
+                            ORDER BY id DESC LIMIT 15");
+
+            using var adapter = new NpgsqlDataAdapter(cmd, conn);
+            var dt = new DataTable();
+            adapter.Fill(dt);
+            datagrid_client.DataSource = dt;
+        }
+
+        private void SelBtnF10_client_Click(object sender, EventArgs e) // Запрос на выборку первых 10 записей
+        {
+            using NpgsqlConnection conn = new(connectionString);
+            conn.Open();
+            string cmd = (@"SELECT * FROM public.""Client""
+                            ORDER BY id ASC LIMIT 10");
+
+            using var adapter = new NpgsqlDataAdapter(cmd, conn);
+            var dt = new DataTable();
+            adapter.Fill(dt);
+            datagrid_client.DataSource = dt;
+        }
+
+        private void SelBtnWithoutRepeat_client_Click(object sender, EventArgs e) // Запрос на выборку данных без повторений
+        {
+            using NpgsqlConnection conn = new(connectionString);
+            conn.Open();
+            string cmd = (@"SELECT DISTINCT on(first_name) id as ""Идентификатор"", first_name as ""Имя"", last_name as ""Фамилия"", phone_number as ""Номер телефона"", email as ""Почта"", address as ""Адрес"" FROM public.""Client"" 
+                            ORDER BY first_name ASC");
+
+            using var adapter = new NpgsqlDataAdapter(cmd, conn);
+            var dt = new DataTable();
+            adapter.Fill(dt);
+            datagrid_client.DataSource = dt;
+        }
+
+        private void SelBtnAll_client_Click(object sender, EventArgs e) // Запрос на полную выборку данных. 
+        {
+            using NpgsqlConnection conn = new(connectionString);
+            conn.Open();
+            string cmd = (@"SELECT * FROM public.""Client""");
+
+            using var adapter = new NpgsqlDataAdapter(cmd, conn);
+            var dt = new DataTable();
+            adapter.Fill(dt);
+            datagrid_client.DataSource = dt;
+        }
+
+        private void MaxBtn_service_Click(object sender, EventArgs e) // Запрос MAX
+        {
+            using NpgsqlConnection conn = new(connectionString);
+            conn.Open();
+            string cmd = (@"SELECT name as ""Название услуги"", cost_per_count as ""Стоимость услуги"" from public.""Service"" 
+                            where cost_per_count = (select max(cost_per_count) from public.""Service"")");
+
+            using var adapter = new NpgsqlDataAdapter(cmd, conn);
+            var dt = new DataTable();
+            adapter.Fill(dt);
+            dataGrid_service.DataSource = dt;
+        }
+
+        private void MinBtn_service_Click(object sender, EventArgs e) // Запрос MIN
+        {
+            using NpgsqlConnection conn = new(connectionString);
+            conn.Open();
+            string cmd = (@"SELECT name as ""Название услуги"", cost_per_count as ""Стоимость услуги"" from public.""Service"" 
+                            where cost_per_count = (select min(cost_per_count) from public.""Service"")");
+
+            using var adapter = new NpgsqlDataAdapter(cmd, conn);
+            var dt = new DataTable();
+            adapter.Fill(dt);
+            dataGrid_service.DataSource = dt;
+        }
+
+        private void AvgBtn_service_Click(object sender, EventArgs e) // Запрос AVG
+        {
+            using NpgsqlConnection conn = new(connectionString);
+            conn.Open();
+            string cmd = (@"SELECT avg(cost_per_count)::numeric(10, 2) as ""Средняя цена"" from public.""Service""");
+
+            using var adapter = new NpgsqlDataAdapter(cmd, conn);
+            var dt = new DataTable();
+            adapter.Fill(dt);
+            dataGrid_service.DataSource = dt;
+        }
+
+        private void ComBtnMore_order_Click(object sender, EventArgs e) // Запросы на возвращение значения по условиям больше, меньше и между
+        {
+            int cost = (int)numericMore.Value;
+
+            using NpgsqlConnection conn = new(connectionString);
+            conn.Open();
+            string cmd = ($"SELECT * from public.\"Order\" where total_cost > {cost}");
+            using var adapter = new NpgsqlDataAdapter(cmd, conn);
+            var dt = new DataTable();
+            adapter.Fill(dt);
+            dataGrid_order.DataSource = dt;
+        }
+
+        private void ComBtnLess_order_Click(object sender, EventArgs e)
+        {
+            int cost = (int)numericLess.Value;
+
+            using NpgsqlConnection conn = new(connectionString);
+            conn.Open();
+            string cmd = ($"SELECT * from public.\"Order\" where total_cost < {cost}");
+            using var adapter = new NpgsqlDataAdapter(cmd, conn);
+            var dt = new DataTable();
+            adapter.Fill(dt);
+            dataGrid_order.DataSource = dt;
+        }
+
+        private void ComBtnBetween_order_Click(object sender, EventArgs e)
+        {
+            int frst = (int)numericBetweenFrst.Value;
+            int scnd = (int)numericBetweenScnd.Value;
+            using NpgsqlConnection conn = new(connectionString);
+            conn.Open();
+            string cmd = ($"SELECT * from public.\"Order\" where total_cost between {frst} and {scnd}");
+            using var adapter = new NpgsqlDataAdapter(cmd, conn);
+            var dt = new DataTable();
+            adapter.Fill(dt);
+            dataGrid_order.DataSource = dt;
+        }
+
+        private void SelLikeBtn_client_Click(object sender, EventArgs e) // Запросы с оператором LIKE
+        {
+            string mail = textBox1.Text;
+            using NpgsqlConnection conn = new(connectionString);
+            conn.Open();
+            string cmd = ($"SELECT * from public.\"Client\" where email like '%{mail}%';");
+            using var adapter = new NpgsqlDataAdapter(cmd, conn);
+            var dt = new DataTable();
+            adapter.Fill(dt);
+            datagrid_client.DataSource = dt;
+        }
+
+        private void button1_Click(object sender, EventArgs e) //  Запрос с NOT NULL
+        {
+            using NpgsqlConnection conn = new(connectionString);
+            conn.Open();
+            string cmd = ($"SELECT * from public.\"Client\" where email is NOT NULL;");
+            using var adapter = new NpgsqlDataAdapter(cmd, conn);
+            var dt = new DataTable();
+            adapter.Fill(dt);
+            datagrid_client.DataSource = dt;
+        }
+
+        private void button2_Click(object sender, EventArgs e) // Запросы с сортировкой
+        {
+            using NpgsqlConnection conn = new(connectionString);
+            conn.Open();
+            string cmd = ($"SELECT * FROM \"Employee\" WHERE role = 'Оператор химчистки' ORDER BY last_name asc;");
+            using var adapter = new NpgsqlDataAdapter(cmd, conn);
+            var dt = new DataTable();
+            adapter.Fill(dt);
+            dataGrid_employee.DataSource = dt;
+        }
+
+        private void SelStatusOrderCountBtn_order_Click(object sender, EventArgs e) // Запрос с групповыми операциями
+        {
+            using NpgsqlConnection conn = new(connectionString);
+            conn.Open();
+            string cmd = ($"SELECT status, COUNT(*) as order_count FROM \"Order\" GROUP BY status;");
+            using var adapter = new NpgsqlDataAdapter(cmd, conn);
+            var dt = new DataTable();
+            adapter.Fill(dt);
+            dataGrid_order.DataSource = dt;
+        }
+
+        private void SelExepctBtn_service_Click(object sender, EventArgs e) // Запрос с операциями над множествами
+        {
+            using NpgsqlConnection conn = new(connectionString);
+            conn.Open();
+            string cmd = ($"SELECT id FROM \"Service\" EXCEPT SELECT DISTINCT id_service FROM \"Service_record\" ORDER BY id;");
+            using var adapter = new NpgsqlDataAdapter(cmd, conn);
+            var dt = new DataTable();
+            adapter.Fill(dt);
+            dataGrid_service.DataSource = dt;
+        }
+
+        private void SelBirthDateBtn_employee_Click(object sender, EventArgs e)
+        {
+            using NpgsqlConnection conn = new(connectionString);
+            conn.Open();
+            string cmd = (@"SELECT 
+    CONCAT(last_name, ' ', LEFT(first_name, 1), '.') AS ""Фамилия И."",
+    EXTRACT(YEAR FROM AGE(CURRENT_DATE + INTERVAL '1 month', birth_date))::int AS ""Возраст"",
+    TO_CHAR(birth_date, 'DD.MM.YYYY') AS ""Дата рождения"",
+    TO_CHAR(birth_date + (EXTRACT(YEAR FROM AGE(CURRENT_DATE + INTERVAL '1 month', birth_date)) + 1) * INTERVAL '1 year', 'DD.MM.YYYY') AS ""Дата юбилея""
+FROM ""Employee""
+WHERE 
+    -- Проверяем, что день и месяц рождения совпадают с следующим месяцем
+    EXTRACT(MONTH FROM birth_date) = EXTRACT(MONTH FROM CURRENT_DATE + INTERVAL '1 month')
+    AND 
+    -- Проверяем, что возраст кратен 5 (юбилей)
+    EXTRACT(YEAR FROM AGE(CURRENT_DATE + INTERVAL '1 month', birth_date))::int % 5 = 0
+ORDER BY 
+    EXTRACT(DAY FROM birth_date), last_name;");
+            using var adapter = new NpgsqlDataAdapter(cmd, conn);
+            var dt = new DataTable();
+            adapter.Fill(dt);
+            dataGrid_employee.DataSource = dt;
+        }
 
         /// Кнопки редактирования
         /// 

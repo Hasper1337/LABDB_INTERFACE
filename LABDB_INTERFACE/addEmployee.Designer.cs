@@ -39,6 +39,8 @@
             textBox_role = new TextBox();
             label_role = new Label();
             maskedTextBox_passportdata = new MaskedTextBox();
+            dateTimePicker1 = new DateTimePicker();
+            label1 = new Label();
             SuspendLayout();
             // 
             // label_passportdata
@@ -146,11 +148,30 @@
             maskedTextBox_passportdata.Size = new Size(162, 23);
             maskedTextBox_passportdata.TabIndex = 33;
             // 
+            // dateTimePicker1
+            // 
+            dateTimePicker1.Location = new Point(12, 205);
+            dateTimePicker1.Name = "dateTimePicker1";
+            dateTimePicker1.Size = new Size(162, 23);
+            dateTimePicker1.TabIndex = 34;
+            // 
+            // label1
+            // 
+            label1.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            label1.AutoSize = true;
+            label1.Location = new Point(180, 211);
+            label1.Name = "label1";
+            label1.Size = new Size(90, 15);
+            label1.TabIndex = 35;
+            label1.Text = "Дата рождения";
+            // 
             // addEmployee
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(302, 297);
+            Controls.Add(label1);
+            Controls.Add(dateTimePicker1);
             Controls.Add(maskedTextBox_passportdata);
             Controls.Add(label_role);
             Controls.Add(textBox_role);
@@ -181,5 +202,7 @@
         private TextBox textBox_role;
         private Label label_role;
         private MaskedTextBox maskedTextBox_passportdata;
+        private DateTimePicker dateTimePicker1;
+        private Label label1;
     }
 }

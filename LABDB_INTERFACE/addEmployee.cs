@@ -28,9 +28,9 @@ namespace LABDB_INTERFACE
                 conn.Open();
                 string query = @"
                 INSERT INTO public.""Employee"" 
-                    (first_name, last_name, role, phone_number, passport_data) 
+                    (first_name, last_name, role, phone_number, passport_data, birth_date) 
                 VALUES 
-                    (@firstName, @lastName, @role, @phone_number, @passport_data)";
+                    (@firstName, @lastName, @role, @phone_number, @passport_data, @birth_date)";
 
                 using NpgsqlCommand cmd = new(query, conn);
 
@@ -73,6 +73,7 @@ namespace LABDB_INTERFACE
                 cmd.Parameters.AddWithValue("@role", role);
                 cmd.Parameters.AddWithValue("@phone_number", phoneNumber);
                 cmd.Parameters.AddWithValue("@passport_data", passportData);
+                cmd.Parameters.AddWithValue("@birth_date", dateTimePicker1.Value);
 
                 cmd.ExecuteNonQuery();
                 MessageBox.Show("Сотрудник добавлен успешно!");

@@ -31,6 +31,7 @@
             datagrid_client = new DataGridView();
             tabControl1 = new TabControl();
             Clients = new TabPage();
+            EscapeClientBtn = new Button();
             button1 = new Button();
             textBox1 = new TextBox();
             SelLikeBtn_client = new Button();
@@ -41,6 +42,8 @@
             edit_client = new Button();
             add_client = new Button();
             Orders = new TabPage();
+            ExistOrderBtn = new Button();
+            button3 = new Button();
             SelStatusOrderCountBtn_order = new Button();
             groupBox2 = new GroupBox();
             numericBetweenScnd = new NumericUpDown();
@@ -57,6 +60,7 @@
             add_order = new Button();
             dataGrid_order = new DataGridView();
             Product = new TabPage();
+            OrProductBtn = new Button();
             DelBtn_product = new Button();
             edit_product = new Button();
             dataGrid_product = new DataGridView();
@@ -69,6 +73,8 @@
             add_service = new Button();
             dataGrid_service = new DataGridView();
             Employee = new TabPage();
+            NotEmplBtn = new Button();
+            SelBirthDateBtn_employee = new Button();
             button2 = new Button();
             edit_employee = new Button();
             add_employee = new Button();
@@ -81,7 +87,6 @@
             WriteReportBtn_client = new Button();
             WriteReportBtn = new Button();
             dataGridView_report = new DataGridView();
-            SelBirthDateBtn_employee = new Button();
             ((System.ComponentModel.ISupportInitialize)datagrid_client).BeginInit();
             tabControl1.SuspendLayout();
             Clients.SuspendLayout();
@@ -114,7 +119,7 @@
             datagrid_client.Margin = new Padding(3, 2, 3, 2);
             datagrid_client.Name = "datagrid_client";
             datagrid_client.RowHeadersWidth = 51;
-            datagrid_client.Size = new Size(759, 518);
+            datagrid_client.Size = new Size(759, 606);
             datagrid_client.TabIndex = 0;
             // 
             // tabControl1
@@ -130,11 +135,12 @@
             tabControl1.Margin = new Padding(3, 2, 3, 2);
             tabControl1.Name = "tabControl1";
             tabControl1.SelectedIndex = 0;
-            tabControl1.Size = new Size(1117, 550);
+            tabControl1.Size = new Size(1117, 638);
             tabControl1.TabIndex = 1;
             // 
             // Clients
             // 
+            Clients.Controls.Add(EscapeClientBtn);
             Clients.Controls.Add(button1);
             Clients.Controls.Add(textBox1);
             Clients.Controls.Add(SelLikeBtn_client);
@@ -149,10 +155,24 @@
             Clients.Margin = new Padding(3, 2, 3, 2);
             Clients.Name = "Clients";
             Clients.Padding = new Padding(3, 2, 3, 2);
-            Clients.Size = new Size(1109, 522);
+            Clients.Size = new Size(1109, 610);
             Clients.TabIndex = 0;
             Clients.Text = "Клиенты";
             Clients.UseVisualStyleBackColor = true;
+            // 
+            // EscapeClientBtn
+            // 
+            EscapeClientBtn.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            EscapeClientBtn.BackColor = Color.Silver;
+            EscapeClientBtn.Cursor = Cursors.Hand;
+            EscapeClientBtn.Location = new Point(784, 491);
+            EscapeClientBtn.Margin = new Padding(3, 2, 3, 2);
+            EscapeClientBtn.Name = "EscapeClientBtn";
+            EscapeClientBtn.Size = new Size(279, 46);
+            EscapeClientBtn.TabIndex = 10;
+            EscapeClientBtn.Text = "Вывести клиентов с почтой %_";
+            EscapeClientBtn.UseVisualStyleBackColor = false;
+            EscapeClientBtn.Click += button4_Click;
             // 
             // button1
             // 
@@ -267,6 +287,8 @@
             // 
             // Orders
             // 
+            Orders.Controls.Add(ExistOrderBtn);
+            Orders.Controls.Add(button3);
             Orders.Controls.Add(SelStatusOrderCountBtn_order);
             Orders.Controls.Add(groupBox2);
             Orders.Controls.Add(groupBox1);
@@ -277,16 +299,44 @@
             Orders.Margin = new Padding(3, 2, 3, 2);
             Orders.Name = "Orders";
             Orders.Padding = new Padding(3, 2, 3, 2);
-            Orders.Size = new Size(1109, 522);
+            Orders.Size = new Size(1109, 610);
             Orders.TabIndex = 1;
             Orders.Text = "Заказы";
             Orders.UseVisualStyleBackColor = true;
+            // 
+            // ExistOrderBtn
+            // 
+            ExistOrderBtn.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            ExistOrderBtn.BackColor = Color.Silver;
+            ExistOrderBtn.Cursor = Cursors.Hand;
+            ExistOrderBtn.Location = new Point(788, 171);
+            ExistOrderBtn.Margin = new Padding(3, 2, 3, 2);
+            ExistOrderBtn.Name = "ExistOrderBtn";
+            ExistOrderBtn.Size = new Size(279, 41);
+            ExistOrderBtn.TabIndex = 12;
+            ExistOrderBtn.Text = "Вывести заказы, для которых существуют услуги";
+            ExistOrderBtn.UseVisualStyleBackColor = false;
+            ExistOrderBtn.Click += ExistOrderBtn_Click;
+            // 
+            // button3
+            // 
+            button3.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            button3.BackColor = Color.Silver;
+            button3.Cursor = Cursors.Hand;
+            button3.Location = new Point(788, 126);
+            button3.Margin = new Padding(3, 2, 3, 2);
+            button3.Name = "button3";
+            button3.Size = new Size(279, 41);
+            button3.TabIndex = 11;
+            button3.Text = "Вывести заказы со статусом выполнен И стоимостью >2000";
+            button3.UseVisualStyleBackColor = false;
+            button3.Click += button3_Click;
             // 
             // SelStatusOrderCountBtn_order
             // 
             SelStatusOrderCountBtn_order.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             SelStatusOrderCountBtn_order.Cursor = Cursors.Hand;
-            SelStatusOrderCountBtn_order.Location = new Point(788, 113);
+            SelStatusOrderCountBtn_order.Location = new Point(788, 67);
             SelStatusOrderCountBtn_order.Margin = new Padding(3, 2, 3, 2);
             SelStatusOrderCountBtn_order.Name = "SelStatusOrderCountBtn_order";
             SelStatusOrderCountBtn_order.Size = new Size(279, 46);
@@ -305,7 +355,7 @@
             groupBox2.Controls.Add(ComBtnLess_order);
             groupBox2.Controls.Add(ComBtnBetween_order);
             groupBox2.Controls.Add(ComBtnMore_order);
-            groupBox2.Location = new Point(789, 171);
+            groupBox2.Location = new Point(789, 260);
             groupBox2.Name = "groupBox2";
             groupBox2.Size = new Size(278, 198);
             groupBox2.TabIndex = 9;
@@ -388,7 +438,7 @@
             groupBox1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             groupBox1.Controls.Add(updateDateIssueButton);
             groupBox1.Controls.Add(updateStatusButton);
-            groupBox1.Location = new Point(788, 389);
+            groupBox1.Location = new Point(789, 477);
             groupBox1.Name = "groupBox1";
             groupBox1.Size = new Size(279, 123);
             groupBox1.TabIndex = 6;
@@ -425,10 +475,10 @@
             // 
             edit_order.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             edit_order.Cursor = Cursors.Hand;
-            edit_order.Location = new Point(788, 63);
+            edit_order.Location = new Point(788, 41);
             edit_order.Margin = new Padding(3, 2, 3, 2);
             edit_order.Name = "edit_order";
-            edit_order.Size = new Size(279, 46);
+            edit_order.Size = new Size(279, 22);
             edit_order.TabIndex = 5;
             edit_order.Text = "Редактирование данных";
             edit_order.UseVisualStyleBackColor = true;
@@ -441,7 +491,7 @@
             add_order.Location = new Point(788, 13);
             add_order.Margin = new Padding(3, 2, 3, 2);
             add_order.Name = "add_order";
-            add_order.Size = new Size(279, 46);
+            add_order.Size = new Size(279, 24);
             add_order.TabIndex = 4;
             add_order.Text = "Добавить заказ";
             add_order.UseVisualStyleBackColor = true;
@@ -455,21 +505,36 @@
             dataGrid_order.Margin = new Padding(3, 2, 3, 2);
             dataGrid_order.Name = "dataGrid_order";
             dataGrid_order.RowHeadersWidth = 51;
-            dataGrid_order.Size = new Size(759, 518);
+            dataGrid_order.Size = new Size(759, 606);
             dataGrid_order.TabIndex = 3;
             // 
             // Product
             // 
+            Product.Controls.Add(OrProductBtn);
             Product.Controls.Add(DelBtn_product);
             Product.Controls.Add(edit_product);
             Product.Controls.Add(dataGrid_product);
             Product.Location = new Point(4, 24);
             Product.Margin = new Padding(3, 2, 3, 2);
             Product.Name = "Product";
-            Product.Size = new Size(1109, 522);
+            Product.Size = new Size(1109, 610);
             Product.TabIndex = 2;
             Product.Text = "Вещи";
             Product.UseVisualStyleBackColor = true;
+            // 
+            // OrProductBtn
+            // 
+            OrProductBtn.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            OrProductBtn.BackColor = Color.Silver;
+            OrProductBtn.Cursor = Cursors.Hand;
+            OrProductBtn.Location = new Point(788, 134);
+            OrProductBtn.Margin = new Padding(3, 2, 3, 2);
+            OrProductBtn.Name = "OrProductBtn";
+            OrProductBtn.Size = new Size(279, 46);
+            OrProductBtn.TabIndex = 7;
+            OrProductBtn.Text = "Вывести костюмы ИЛИ шубы";
+            OrProductBtn.UseVisualStyleBackColor = false;
+            OrProductBtn.Click += OrProductBtn_Click;
             // 
             // DelBtn_product
             // 
@@ -505,7 +570,7 @@
             dataGrid_product.Margin = new Padding(3, 2, 3, 2);
             dataGrid_product.Name = "dataGrid_product";
             dataGrid_product.RowHeadersWidth = 51;
-            dataGrid_product.Size = new Size(759, 522);
+            dataGrid_product.Size = new Size(759, 610);
             dataGrid_product.TabIndex = 3;
             // 
             // Service
@@ -520,7 +585,7 @@
             Service.Location = new Point(4, 24);
             Service.Margin = new Padding(3, 2, 3, 2);
             Service.Name = "Service";
-            Service.Size = new Size(1109, 522);
+            Service.Size = new Size(1109, 610);
             Service.TabIndex = 3;
             Service.Text = "Услуги";
             Service.UseVisualStyleBackColor = true;
@@ -611,11 +676,12 @@
             dataGrid_service.Margin = new Padding(3, 2, 3, 2);
             dataGrid_service.Name = "dataGrid_service";
             dataGrid_service.RowHeadersWidth = 51;
-            dataGrid_service.Size = new Size(759, 522);
+            dataGrid_service.Size = new Size(759, 610);
             dataGrid_service.TabIndex = 3;
             // 
             // Employee
             // 
+            Employee.Controls.Add(NotEmplBtn);
             Employee.Controls.Add(SelBirthDateBtn_employee);
             Employee.Controls.Add(button2);
             Employee.Controls.Add(edit_employee);
@@ -624,10 +690,37 @@
             Employee.Location = new Point(4, 24);
             Employee.Margin = new Padding(3, 2, 3, 2);
             Employee.Name = "Employee";
-            Employee.Size = new Size(1109, 522);
+            Employee.Size = new Size(1109, 610);
             Employee.TabIndex = 4;
             Employee.Text = "Сотрудники";
             Employee.UseVisualStyleBackColor = true;
+            // 
+            // NotEmplBtn
+            // 
+            NotEmplBtn.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            NotEmplBtn.BackColor = Color.Silver;
+            NotEmplBtn.Cursor = Cursors.Hand;
+            NotEmplBtn.Location = new Point(788, 268);
+            NotEmplBtn.Margin = new Padding(3, 2, 3, 2);
+            NotEmplBtn.Name = "NotEmplBtn";
+            NotEmplBtn.Size = new Size(282, 46);
+            NotEmplBtn.TabIndex = 8;
+            NotEmplBtn.Text = "Вывести всех сотрудников но НЕ операторов химчистки";
+            NotEmplBtn.UseVisualStyleBackColor = false;
+            NotEmplBtn.Click += NotEmplBtn_Click;
+            // 
+            // SelBirthDateBtn_employee
+            // 
+            SelBirthDateBtn_employee.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            SelBirthDateBtn_employee.Cursor = Cursors.Hand;
+            SelBirthDateBtn_employee.Location = new Point(788, 208);
+            SelBirthDateBtn_employee.Margin = new Padding(3, 2, 3, 2);
+            SelBirthDateBtn_employee.Name = "SelBirthDateBtn_employee";
+            SelBirthDateBtn_employee.Size = new Size(282, 46);
+            SelBirthDateBtn_employee.TabIndex = 7;
+            SelBirthDateBtn_employee.Text = "Вывести сотрудников у которых будет юбилей в след.месяце";
+            SelBirthDateBtn_employee.UseVisualStyleBackColor = true;
+            SelBirthDateBtn_employee.Click += SelBirthDateBtn_employee_Click;
             // 
             // button2
             // 
@@ -676,7 +769,7 @@
             dataGrid_employee.Margin = new Padding(3, 2, 3, 2);
             dataGrid_employee.Name = "dataGrid_employee";
             dataGrid_employee.RowHeadersWidth = 51;
-            dataGrid_employee.Size = new Size(759, 522);
+            dataGrid_employee.Size = new Size(759, 610);
             dataGrid_employee.TabIndex = 3;
             // 
             // Report
@@ -690,7 +783,7 @@
             Report.Controls.Add(dataGridView_report);
             Report.Location = new Point(4, 24);
             Report.Name = "Report";
-            Report.Size = new Size(1109, 522);
+            Report.Size = new Size(1109, 610);
             Report.TabIndex = 5;
             Report.Text = "Сформировать отчёт";
             Report.UseVisualStyleBackColor = true;
@@ -748,14 +841,15 @@
             // WriteReportBtn
             // 
             WriteReportBtn.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            WriteReportBtn.BackColor = Color.Silver;
             WriteReportBtn.Cursor = Cursors.Hand;
             WriteReportBtn.Location = new Point(789, 18);
             WriteReportBtn.Margin = new Padding(3, 2, 3, 2);
             WriteReportBtn.Name = "WriteReportBtn";
             WriteReportBtn.Size = new Size(206, 46);
             WriteReportBtn.TabIndex = 5;
-            WriteReportBtn.Text = "Сформировать отчет по сотрудникам";
-            WriteReportBtn.UseVisualStyleBackColor = true;
+            WriteReportBtn.Text = "Вывести информацию о сотруднике по идентификатору";
+            WriteReportBtn.UseVisualStyleBackColor = false;
             WriteReportBtn.Click += WriteReportBtn_Click;
             // 
             // dataGridView_report
@@ -766,27 +860,14 @@
             dataGridView_report.Margin = new Padding(3, 2, 3, 2);
             dataGridView_report.Name = "dataGridView_report";
             dataGridView_report.RowHeadersWidth = 51;
-            dataGridView_report.Size = new Size(759, 522);
+            dataGridView_report.Size = new Size(759, 610);
             dataGridView_report.TabIndex = 4;
-            // 
-            // SelBirthDateBtn_employee
-            // 
-            SelBirthDateBtn_employee.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            SelBirthDateBtn_employee.Cursor = Cursors.Hand;
-            SelBirthDateBtn_employee.Location = new Point(788, 208);
-            SelBirthDateBtn_employee.Margin = new Padding(3, 2, 3, 2);
-            SelBirthDateBtn_employee.Name = "SelBirthDateBtn_employee";
-            SelBirthDateBtn_employee.Size = new Size(282, 46);
-            SelBirthDateBtn_employee.TabIndex = 7;
-            SelBirthDateBtn_employee.Text = "Вывести сотрудников у которых будет юбилей в след.месяце";
-            SelBirthDateBtn_employee.UseVisualStyleBackColor = true;
-            SelBirthDateBtn_employee.Click += SelBirthDateBtn_employee_Click;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1116, 548);
+            ClientSize = new Size(1116, 636);
             Controls.Add(tabControl1);
             Margin = new Padding(3, 2, 3, 2);
             Name = "Form1";
@@ -874,5 +955,10 @@
         private Button SelStatusOrderCountBtn_order;
         private Button SelExepctBtn_service;
         private Button SelBirthDateBtn_employee;
+        private Button OrProductBtn;
+        private Button button3;
+        private Button NotEmplBtn;
+        private Button ExistOrderBtn;
+        private Button EscapeClientBtn;
     }
 }

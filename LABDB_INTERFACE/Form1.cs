@@ -167,18 +167,7 @@ namespace LABDB_INTERFACE
                 int id = (int)numericUpDown_employee.Value;
                 if (id <= 0)
                 {
-                    string queryifidnull = @"
-            SELECT 
-                e.id,
-                e.first_name ||' '|| e.last_name AS ""Сотрудник"",
-                o.id AS ""Номер заказа"",
-                o.pickup_date AS ""Дата приёма"",
-                p.type_product AS ""Изделие""
-            FROM public.""Employee"" e
-            JOIN public.""Service_record"" sr ON e.id = sr.""id_employee""
-            JOIN public.""Order"" o ON o.id = sr.""id_order""
-            JOIN public.""Product"" p ON o.id = p.""id_order""
-            ORDER BY e.id asc;";
+                    string queryifidnull = $"SELECT * FROM \"Employee\";";
                     using var cmd = new NpgsqlCommand(queryifidnull, conn);
                     using var adapter = new NpgsqlDataAdapter(cmd);
                     DataTable dt = new DataTable();
@@ -187,23 +176,11 @@ namespace LABDB_INTERFACE
                 }
                 else
                 {
-                    string queryifidnotnull = @"
-            SELECT 
-                e.id,
-                e.first_name ||' '|| e.last_name AS ""Сотрудник"",
-                o.id AS ""Номер заказа"",
-                o.pickup_date AS ""Дата приёма"",
-                p.type_product AS ""Изделие""
-            FROM public.""Employee"" e
-            JOIN public.""Service_record"" sr ON e.id = sr.""id_employee""
-            JOIN public.""Order"" o ON o.id = sr.""id_order""
-            JOIN public.""Product"" p ON o.id = p.""id_order""
-            WHERE e.id = @id
-            ORDER BY e.id asc;";
+                    string queryifidnotnull = $"SELECT * FROM \"Employee\" where id = {id};";
                     using var cmd = new NpgsqlCommand(queryifidnotnull, conn);
                     using var adapter = new NpgsqlDataAdapter(cmd);
 
-                    cmd.Parameters.AddWithValue("@id", id);
+                    //cmd.Parameters.AddWithValue("@id", id);
 
                     DataTable dt = new DataTable();
                     adapter.Fill(dt);
@@ -598,6 +575,61 @@ ORDER BY
             var dt = new DataTable();
             adapter.Fill(dt);
             dataGrid_employee.DataSource = dt;
+        }
+
+        private void button3_Click(object sender, EventArgs e) // and
+        {
+            using NpgsqlConnection conn = new(connectionString);
+            conn.Open();
+            string cmd = ($"SELECT * FROM \"Order\" WHERE status = 'Выполнен' AND total_cost > 2000;");
+            using var adapter = new NpgsqlDataAdapter(cmd, conn);
+            var dt = new DataTable();
+            adapter.Fill(dt);
+            dataGrid_order.DataSource = dt;
+        }
+
+        private void OrProductBtn_Click(object sender, EventArgs e) // or
+        {
+            using NpgsqlConnection conn = new(connectionString);
+            conn.Open();
+            string cmd = ($"SELECT * FROM \"Product\" WHERE type_cloath = 'Костюм' OR type_cloath = 'Шуба';");
+            using var adapter = new NpgsqlDataAdapter(cmd, conn);
+            var dt = new DataTable();
+            adapter.Fill(dt);
+            dataGrid_product.DataSource = dt;
+        }
+
+        private void NotEmplBtn_Click(object sender, EventArgs e) // not
+        {
+            using NpgsqlConnection conn = new(connectionString);
+            conn.Open();
+            string cmd = ($"SELECT * FROM \"Employee\" WHERE NOT role = 'Оператор химчистки';");
+            using var adapter = new NpgsqlDataAdapter(cmd, conn);
+            var dt = new DataTable();
+            adapter.Fill(dt);
+            dataGrid_employee.DataSource = dt;
+        }
+
+        private void ExistOrderBtn_Click(object sender, EventArgs e) // exists
+        {
+            using NpgsqlConnection conn = new(connectionString);
+            conn.Open();
+            string cmd = ($"SELECT * FROM \"Order\" o WHERE EXISTS (SELECT * FROM \"Service_record\" sr WHERE sr.id_order = o.id);");
+            using var adapter = new NpgsqlDataAdapter(cmd, conn);
+            var dt = new DataTable();
+            adapter.Fill(dt);
+            dataGrid_order.DataSource = dt;
+        }
+
+        private void button4_Click(object sender, EventArgs e) // escape
+        {
+            using NpgsqlConnection conn = new(connectionString);
+            conn.Open();
+            string cmd = ($"SELECT * FROM \"Client\" WHERE email LIKE '/%_' escape '/';");
+            using var adapter = new NpgsqlDataAdapter(cmd, conn);
+            var dt = new DataTable();
+            adapter.Fill(dt);
+            datagrid_client.DataSource = dt;
         }
 
         /// Кнопки редактирования
